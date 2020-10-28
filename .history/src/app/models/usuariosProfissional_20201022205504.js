@@ -1,0 +1,5 @@
+class usuarioProfissional {
+    adicionar(usuarioProfissional) {
+
+    }
+}

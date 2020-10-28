@@ -18,6 +18,9 @@
     <!-- Theme CSS -->
     <link href="css/freelancer.min.css" rel="stylesheet">
 
+    <!-- Axios  -->
+    <script src="js/axios.js"></script>
+
 </head>
 
 <body id="page-top">
@@ -179,11 +182,6 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>15/10/2020 - 16:00</td>
-                                            <td>Josefá</td>
-                                            <td>@mdo</td>
-                                            <td>(15) 99320-5566</td>
-                                            <td>josefa@email.com</td>
                                             <td>
                                                 <div class="row">
                                                     <div class="col-6 col-sm-4">
@@ -195,57 +193,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>22/10/2020 - 14:00</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                            <td>(15) 99320-8989</td>
-                                            <td>otto@email.com</td>
-                                            <td>
-                                                <div class="row">
-                                                    <div class="col-6 col-sm-4">
-                                                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#confirmarSolicitacao">Sim</button>
-                                                    </div>
-                                                    <div class="col-6 col-sm-4">
-                                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#cancelarSolicitacao">Não</button>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>18/10/2020 - 10:00</td>
-                                            <td>Thornton</td>
-                                            <td>@fat</td>
-                                            <td>(15) 99320-4444</td>
-                                            <td>thornton@email.com</td>
-                                            <td>
-                                                <div class="row">
-                                                    <div class="col-6 col-sm-4">
-                                                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#confirmarSolicitacao">Sim</button>
-                                                    </div>
-                                                    <div class="col-6 col-sm-4">
-                                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#cancelarSolicitacao">Não</button>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>15/10/2020 - 16:00</td>
-                                            <td>Josefá</td>
-                                            <td>@mdo</td>
-                                            <td>(15) 99320-5566</td>
-                                            <td>josefa@email.com</td>
-                                            <td>
-                                                <div class="row">
-                                                    <div class="col-6 col-sm-4">
-                                                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#confirmarSolicitacao">Sim</button>
-                                                    </div>
-                                                    <div class="col-6 col-sm-4">
-                                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#cancelarSolicitacao">Não</button>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -344,6 +292,19 @@
 
     <!-- Custom scripts for this template -->
     <script src="js/freelancer.min.js"></script>
+
+
+
+    <!-- trazer dados com axios -->
+    <script>
+        const url = 'solicitacoesprofissional'
+        axios(url).then(resp => {
+            const itens = resp.data.reduce(
+                (html, solicitacao) => html + `<li>${solicitacao.horaSolicitacao}</li>`, ''
+            )
+            document.body.insertAdjacentHTML('beforeend', `<ul>${itens}</ul>`)
+        })
+    </script>
 
 </body>
 
