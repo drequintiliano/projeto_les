@@ -23,7 +23,7 @@ function render(input, out, __component, component, state) {
     var $keyScope$0 = "[" + (($for$0++) + "]");
 
     out.w("<tr><td>" +
-      marko_escapeXml(solicitacao.data) +
+      marko_escapeXml(solicitacao.horaSolicitacao) +
       "</td><td>" +
       marko_escapeXml(solicitacao.cliente) +
       "</td><td>" +
