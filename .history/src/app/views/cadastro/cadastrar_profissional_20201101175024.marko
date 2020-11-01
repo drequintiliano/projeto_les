@@ -71,39 +71,53 @@
             <div class="row">
                 <div class="col-lg-8 mx-auto">
                     <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
-                    <form name="sentMessage" id="contactForm" novalidate="novalidate">
+                    <form action="/cadastrar_profissional" method="POST" id="cadastrarProfissional">
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">
                                 <label>Nome</label>
-                                <input class="form-control" id="name" type="text" placeholder="Nome" required="required" data-validation-required-message="Please enter your name.">
+                                <input class="form-control" name="nome" id="nome" type="text" placeholder="Nome" required="required" data-validation-required-message="Please enter your name.">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">
                                 <label>Celular</label>
-                                <input class="form-control" id="phone" type="tel" placeholder="Celular" required="required" data-validation-required-message="Please enter your phone number.">
+                                <input class="form-control" name="celular" id="celular" type="tel" placeholder="Celular" required="required" data-validation-required-message="Please enter your phone number.">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                                <label>Telefone</label>
+                                <input class="form-control" name="telefone" id="telefone" type="tel" placeholder="Telefone" required="required" data-validation-required-message="Please enter your phone number.">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">
                                 <label>Endereço</label>
-                                <input class="form-control" id="name" type="text" placeholder="Endereço" required="required" data-validation-required-message="Please enter your address.">
+                                <input class="form-control" name="endereco" id="endereco" type="text" placeholder="Endereço" required="required" data-validation-required-message="Please enter your address.">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">
                                 <label>Cidade</label>
-                                <input class="form-control" id="name" type="text" placeholder="Cidade" required="required" data-validation-required-message="Please enter your city.">
+                                <input class="form-control" name="cidade" id="cidade" type="text" placeholder="Cidade" required="required" data-validation-required-message="Please enter your city.">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                                <label>Facebook, Instagram, Twitter...</label>
+                                <input class="form-control" name="redes_sociais" id="redes_sociais" type="text" placeholder="Redes Sociais" required="required" data-validation-required-message="Please enter your links.">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">
                                 <label>Resumo Profissional</label>
-                                <textarea class="form-control" id="resumo" type="text" placeholder="Resumo Profissional"></textarea>
+                                <textarea class="form-control" name="descricao" id="descricao" type="text" placeholder="Resumo Profissional"></textarea>
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
@@ -112,21 +126,21 @@
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">
                                 <label>Email</label>
-                                <input class="form-control" id="email" type="email" placeholder="Email" required="required" data-validation-required-message="Please enter your email address.">
+                                <input class="form-control" name="email" id="email" type="email" placeholder="Email" required="required" data-validation-required-message="Please enter your email address.">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">
                                 <label>Senha</label>
-                                <input class="form-control" id="senha" type="password" placeholder="Senha" required="required" data-validation-required-message="Please enter your password.">
+                                <input class="form-control" name="senha" id="senha" type="password" placeholder="Senha" required="required" data-validation-required-message="Please enter your password.">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">
                                 <label>Confirmar Senha</label>
-                                <input class="form-control" id="confirmarSenha" type="password" placeholder="Confirmar Senha" required="required" data-validation-required-message="Please enter your confirm password.">
+                                <input class="form-control" name="confirmarSenha" id="confirmarSenha" type="password" placeholder="Confirmar Senha" required="required" data-validation-required-message="Please enter your confirm password.">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
@@ -140,6 +154,16 @@
                               <a>Cadastrar</a>
                             </button>
                         </div>
+
+                        <if(erros)>
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                ${erros}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </if>
+
                     </form>
                 </div>
             </div>
@@ -194,6 +218,22 @@
 
     <!-- Custom scripts for this template -->
     <script src="js/freelancer.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("form").submit(function() {
+                alert("Cadastro efetuado com sucesso!");
+                // event.preventDefault();
+                // $('#myAlert').show('fade');  
+
+                // setTimeout(function() {
+                //     $('#myAlert').hide('fade');
+                //     document.getElementById("cadastroCliente").reset();
+                // }, 5000)    
+            });
+        });
+    </script>
 
 </body>
 

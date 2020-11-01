@@ -15,7 +15,7 @@ const solicitacoesClienteController = new SolicitacoesClienteController
 const usuarioClienteController = new UsuarioClienteController
 
 
-/*------------------------------------------------------------ Rotas Home ------------------------------------------------------------*/
+/*------------------------------ Rotas Home ------------------------------*/
 routes.get('/', getIndex);
 
 routes.get('/index.html', getIndex);
@@ -37,7 +37,7 @@ routes.get('/cadastro.html', function(req, res) {
 });
 
 
-/*------------------------------------------------------------ Rotas Serviços ------------------------------------------------------------*/
+/*------------------------------ Rotas Serviços ------------------------------*/
 routes.get('/cat_servicos.html', function(req, res) {
     res.sendFile(path.resolve(__dirname + '../../views/categorias/cat_servicos.html'));
 });
@@ -63,7 +63,7 @@ routes.get('/cat_eventos.html', function(req, res) {
 });
 
 
-/*------------------------------------------------------------ Rotas Profissional ------------------------------------------------------------*/
+/*------------------------------ Rotas Profissional ------------------------------*/
 routes.get('/profissional_index.html', function(req, res) {
     res.sendFile(path.resolve(__dirname + '../../views/perfil/profissional/profissional_index.html'));
 });
@@ -93,7 +93,7 @@ routes.get('/solicitacoes_profissional', solicitacoesProfissionalController.list
 routes.delete('/solicitacoes_cliente/:id', solicitacoesProfissionalController.removeSolicitacao());
 
 
-/*------------------------------------------------------------ Rotas Cliente ------------------------------------------------------------*/
+/*------------------------------ Rotas Cliente ------------------------------*/
 routes.get('/cliente_index.html', function(req, res) {
     res.sendFile(path.resolve(__dirname + '../../views/perfil/cliente/cliente_index.html'));
 });

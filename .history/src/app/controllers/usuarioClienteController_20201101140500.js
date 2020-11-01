@@ -9,6 +9,7 @@ class UsuarioClienteController {
 
             const usuariosCliente = new UsuariosCliente(conexao);
             usuariosCliente.adiciona(form)
+                // .then(resp.redirect('/cadastrar_cliente'))
                 .then(resp.redirect('/cliente_index.html'))
                 .catch(erro => console.log(erro));
         };

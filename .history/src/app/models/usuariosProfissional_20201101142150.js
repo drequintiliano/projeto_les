@@ -10,23 +10,17 @@ class UsuariosProfissional {
             const sql = `INSERT INTO usuariosProfissional (
                 nome,
                 celular,
-                telefone,
                 endereco,
                 cidade,
-                redes_sociais,
-                descricao,
                 email,
                 senha
-            ) VALUES (?,?,?,?,?,?,?,?,?)`;
+            ) VALUES (?,?,?,?,?,?)`;
 
             const array = [
                 profissional.nome,
                 profissional.celular,
-                profissional.telefone,
                 profissional.endereco,
                 profissional.cidade,
-                profissional.redes_sociais,
-                profissional.descricao,
                 profissional.email,
                 profissional.senha
             ];
@@ -35,24 +29,8 @@ class UsuariosProfissional {
                 if (erro) {
                     console.log(erro);
                     return reject('Não foi possivel adicionar profissional' + erro);
-                } else {
-                    return resolve();
                 }
-            })
-        })
-    }
-
-    procurarEmail(email) {
-        return new Promise((resolve, reject) => {
-            const sql = `SELECT email FROM usuariosProfissional WHERE email = ?`;
-
-            conexao.query(sql, [email], (erro, resultados) => {
-                if (erro) {
-                    console.log(erro);
-                    return reject('Não foi possivel executar a função procurarEmail' + erro);
-                } else {
-                    return resolve();
-                }
+                return resolve();
             })
         })
     }

@@ -41,21 +41,6 @@ class UsuariosProfissional {
             })
         })
     }
-
-    procurarEmail(email) {
-        return new Promise((resolve, reject) => {
-            const sql = `SELECT email FROM usuariosProfissional WHERE email = ?`;
-
-            conexao.query(sql, [email], (erro, resultados) => {
-                if (erro) {
-                    console.log(erro);
-                    return reject('Não foi possivel executar a função procurarEmail' + erro);
-                } else {
-                    return resolve();
-                }
-            })
-        })
-    }
 }
 
 module.exports = UsuariosProfissional;

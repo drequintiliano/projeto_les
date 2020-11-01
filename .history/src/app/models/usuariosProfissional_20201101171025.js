@@ -49,7 +49,7 @@ class UsuariosProfissional {
             conexao.query(sql, [email], (erro, resultados) => {
                 if (erro) {
                     console.log(erro);
-                    return reject('Não foi possivel executar a função procurarEmail' + erro);
+                    return reject('Não foi possivel adicionar profissional' + erro);
                 } else {
                     return resolve();
                 }

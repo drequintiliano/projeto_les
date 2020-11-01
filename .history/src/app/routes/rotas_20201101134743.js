@@ -3,19 +3,17 @@ const path = require('path');
 
 // Controllers
 const SolicitacoesProfissionalController = require('../controllers/solicitacoesProfissionalController');
-const UsuarioProfissionalController = require('../controllers/usuarioProfissionalController');
 const SolicitacoesClienteController = require('../controllers/solicitacoesClienteController');
 const UsuarioClienteController = require('../controllers/usuarioClienteController');
 const getIndex = require('../controllers/get');
 
 // Instancias
 const solicitacoesProfissionalController = new SolicitacoesProfissionalController
-const usuarioProfissionalController = new UsuarioProfissionalController
 const solicitacoesClienteController = new SolicitacoesClienteController
 const usuarioClienteController = new UsuarioClienteController
 
 
-/*------------------------------------------------------------ Rotas Home ------------------------------------------------------------*/
+/*------------------------------ Rotas Home ------------------------------*/
 routes.get('/', getIndex);
 
 routes.get('/index.html', getIndex);
@@ -32,12 +30,8 @@ routes.get('/login.html', function(req, res) {
     res.sendFile(path.resolve(__dirname + '../../views/login.html'));
 });
 
-routes.get('/cadastro.html', function(req, res) {
-    res.sendFile(path.resolve(__dirname + '../../views/cadastro/cadastro.html'));
-});
 
-
-/*------------------------------------------------------------ Rotas Serviços ------------------------------------------------------------*/
+/*------------------------------ Rotas Serviços ------------------------------*/
 routes.get('/cat_servicos.html', function(req, res) {
     res.sendFile(path.resolve(__dirname + '../../views/categorias/cat_servicos.html'));
 });
@@ -63,11 +57,21 @@ routes.get('/cat_eventos.html', function(req, res) {
 });
 
 
-/*------------------------------------------------------------ Rotas Profissional ------------------------------------------------------------*/
-routes.get('/profissional_index.html', function(req, res) {
-    res.sendFile(path.resolve(__dirname + '../../views/perfil/profissional/profissional_index.html'));
+/*------------------------------ Rotas Cadastro ------------------------------*/
+routes.get('/cadastro.html', function(req, res) {
+    res.sendFile(path.resolve(__dirname + '../../views/cadastro/cadastro.html'));
 });
 
+routes.get('/cadastrar_profissional.html', function(req, res) {
+    res.sendFile(path.resolve(__dirname + '../../views/cadastro/cadastrar_profissional.html'));
+});
+
+routes.get('/cadastrar_cliente', function(req, res) {
+    res.marko(require(__dirname + '../../views/cadastro/cadastrar_cliente.marko'));
+});
+
+
+/*------------------------------ Rotas Perfil Profissional ------------------------------*/
 routes.get('/perfil_profissional.html', function(req, res) {
     res.sendFile(path.resolve(__dirname + '../../views/perfil/profissional/perfil_profissional.html'));
 });
@@ -75,13 +79,6 @@ routes.get('/perfil_profissional.html', function(req, res) {
 routes.get('/perfil_profissional_servicos.html', function(req, res) {
     res.sendFile(path.resolve(__dirname + '../../views/perfil/profissional/perfil_profissional_servicos.html'));
 });
-
-// Cadastro Profissional
-routes.get('/cadastrar_profissional', function(req, res) {
-    res.marko(require(__dirname + '../../views/cadastro/cadastrar_profissional.marko'));
-});
-
-routes.post('/cadastrar_profissional', usuarioProfissionalController.cadastrarProfissional());
 
 // Solicitacoes Profissional
 routes.get('/perfil_profissional_solicitacoes.html', function(req, res) {
@@ -93,22 +90,13 @@ routes.get('/solicitacoes_profissional', solicitacoesProfissionalController.list
 routes.delete('/solicitacoes_cliente/:id', solicitacoesProfissionalController.removeSolicitacao());
 
 
-/*------------------------------------------------------------ Rotas Cliente ------------------------------------------------------------*/
-routes.get('/cliente_index.html', function(req, res) {
-    res.sendFile(path.resolve(__dirname + '../../views/perfil/cliente/cliente_index.html'));
-});
-
+/*------------------------------ Perfil Cliente ------------------------------*/
 routes.get('/perfil_cliente.html', function(req, res) {
     res.sendFile(path.resolve(__dirname + '../../views/perfil/cliente/perfil_cliente.html'));
 });
 
 routes.get('/perfil_cliente_solicitacoes.html', function(req, res) {
     res.sendFile(path.resolve(__dirname + '../../views/perfil/cliente/perfil_cliente_solicitacoes.html'));
-});
-
-// Cadastro Cliente
-routes.get('/cadastrar_cliente', function(req, res) {
-    res.marko(require(__dirname + '../../views/cadastro/cadastrar_cliente.marko'));
 });
 
 routes.post('/cadastrar_cliente', usuarioClienteController.cadastrarCliente());

@@ -13,7 +13,7 @@ class UsuarioProfissionalController {
             usuariosProfissional.procurarEmail(email).then((usuariosProfissional) => {
                 if (email) {
                     console.log("Email informado ja existe, por favor insira outro.");
-                    resp.redirect('/cadastrar_profissional').renderToString({ label: "Email informado ja existe, por favor insira outro." });
+                    resp.require('/cadastrar_profissional').renderToString({ label: "Email informado ja existe, por favor insira outro." });
                 } else {
                     console.log(form);
                     usuariosProfissional.adiciona(form)
