@@ -60,18 +60,18 @@ class UsuariosProfissional {
     }
 
     static validacoes() {
-        return [
-            check('nome').isLength({ min: 5 }).withMessage('O nome precisa ter no mínimo 5 caracteres.'),
-            check('senha').isLength({ min: 5 }).withMessage('A senha precisa ter no mínimo 5 caracteres.'),
-            check('senha').custom((value, { req }) => {
-                if (value !== req.body.confirmarSenha) {
-                    console.log("senha: " + value)
-                    console.log("confirmarSenha: " + req.body.confirmarSenha)
-                    throw new Error('O campo "senha" e "confirmar senha" devem ser iguais.');
-                }
-                return true
-            }),
+        const usuariosProfissional = new UsuariosProfissional
 
+        return [
+            check('nome').isLength({ min: 5 }).withMessage('O nome precisa ter no mínimo 5 caracteres!'),
+            check('senha').isLength({ min: 5 }).withMessage('A senha precisa ter no mínimo 5 caracteres!'),
+            check('senha').custom((value, { req }) => {
+                console.log("senha: " + value)
+                console.log("confirmarSenha: " + req.body.confirmarSenha)
+                if (value !== req.body.confirmarSenha) {
+                    throw new Error('O campo "senha" e "confirmar senha" devem ser iguais!');
+                }
+            })
         ];
     }
 }

@@ -1,10 +1,10 @@
 const UsuariosCliente = require('../models/usuariosCliente');
 const conexao = require('../config/conexao');
-const { validationResult } = require('express-validator');
+const { validationResult } = require('express-validator/check');
 
 class UsuarioClienteController {
 
-    cadastrarCliente() {
+    cadastrarProfissional() {
         return function(req, resp) {
             const form = req.body;
             const email = req.body.email;

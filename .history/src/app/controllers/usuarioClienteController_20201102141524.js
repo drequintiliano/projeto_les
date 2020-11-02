@@ -4,7 +4,7 @@ const { validationResult } = require('express-validator');
 
 class UsuarioClienteController {
 
-    cadastrarCliente() {
+    cadastrarProfissional() {
         return function(req, resp) {
             const form = req.body;
             const email = req.body.email;

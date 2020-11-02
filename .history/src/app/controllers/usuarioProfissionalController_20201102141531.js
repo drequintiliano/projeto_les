@@ -2,22 +2,34 @@ const UsuariosProfissional = require('../models/usuariosProfissional');
 const conexao = require('../config/conexao');
 const { validationResult } = require('express-validator');
 
+
 class UsuarioProfissionalController {
 
     cadastrarProfissional() {
         return function(req, resp) {
             const form = req.body;
+            const email = req.body.email;
 
             const usuariosProfissional = new UsuariosProfissional(conexao);
 
             const erros = validationResult(req);
 
-            if (!erros.isEmpty()) {
+            if (!usuariosProfissional.procurarEmail(email)) {
+                console.log("Email informado ja existe, por favor insira outro.");
+
+                console.log(form);
                 return resp.marko(
                     require(__dirname + '../../views/cadastro/cadastrar_profissional.marko'), {
                         profissional: {},
-                        errosValidacao: erros.array(),
-                        sucesso: false
+                        sucesso: false,
+                        erroEmail: true
+                    }
+                );
+            } else if (!erros.isEmpty()) {
+                return resp.marko(
+                    require(__dirname + '../../views/cadastro/cadastrar_profissional.marko'), {
+                        profissional: {},
+                        errosValidacao: erros.array()
                     }
                 );
             } else {
@@ -28,6 +40,7 @@ class UsuarioProfissionalController {
                             require(__dirname + '../../views/cadastro/cadastrar_profissional.marko'), {
                                 profissional: {},
                                 sucesso: true,
+                                erroEmail: false
                             }
                         ))
                     .catch(erro => console.log(erro))

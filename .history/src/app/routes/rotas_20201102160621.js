@@ -89,10 +89,9 @@ routes.get('/cadastrar_profissional', function(req, res) {
 
 routes.post('/cadastrar_profissional', [
     check('email').custom(value => {
-        return usuariosProfissional.procurarEmail(value).then(user => {
-            console.log("user: " + user)
-            console.log("value: " + value)
-            if (usuariosProfissional.procurarEmail(value) = value) {
+        return usuariosProfissional.procurarEmail(value).then(usuariosProfissional => {
+            if (!usuariosProfissional) {
+                console.log(req.body)
                 return Promise.reject('E-mail already in use');
             }
         });

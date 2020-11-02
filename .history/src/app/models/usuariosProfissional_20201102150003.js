@@ -61,17 +61,22 @@ class UsuariosProfissional {
 
     static validacoes() {
         return [
-            check('nome').isLength({ min: 5 }).withMessage('O nome precisa ter no mínimo 5 caracteres.'),
-            check('senha').isLength({ min: 5 }).withMessage('A senha precisa ter no mínimo 5 caracteres.'),
-            check('senha').custom((value, { req }) => {
-                if (value !== req.body.confirmarSenha) {
-                    console.log("senha: " + value)
-                    console.log("confirmarSenha: " + req.body.confirmarSenha)
-                    throw new Error('O campo "senha" e "confirmar senha" devem ser iguais.');
+            check('senha').isLength({ min: 5 }).withMessage('A senha precisa ter no mínimo 5 caracteres!'),
+            check('nome').isLength({ min: 5 }).withMessage('O nome precisa ter no mínimo 5 caracteres!'),
+            check('confirmarSenha').custom((value, { req }) => {
+                console.log("confirma: " + req.body);
+                if (value !== req.body.senha) {
+                    throw new Error('Os campos "senha" e "confirmar senha" precisam ser iguais');
                 }
-                return true
             }),
-
+            body('email').custom(value => {
+                const usuariosProfissional = new UsuariosProfissional
+                return usuariosProfissional.procurarEmail(value).then(usuariosProfissional => {
+                    if (usuariosProfissional) {
+                        return Promise.reject('E-mail already in use');
+                    }
+                });
+            })
         ];
     }
 }

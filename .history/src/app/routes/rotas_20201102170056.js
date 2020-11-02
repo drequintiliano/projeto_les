@@ -92,7 +92,7 @@ routes.post('/cadastrar_profissional', [
         return usuariosProfissional.procurarEmail(value).then(user => {
             console.log("user: " + user)
             console.log("value: " + value)
-            if (usuariosProfissional.procurarEmail(value) = value) {
+            if (usuariosProfissional.procurarEmail(value) == value) {
                 return Promise.reject('E-mail already in use');
             }
         });

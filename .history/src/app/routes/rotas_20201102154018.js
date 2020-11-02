@@ -89,14 +89,19 @@ routes.get('/cadastrar_profissional', function(req, res) {
 
 routes.post('/cadastrar_profissional', [
     check('email').custom(value => {
-        return usuariosProfissional.procurarEmail(value).then(user => {
-            console.log("user: " + user)
-            console.log("value: " + value)
-            if (usuariosProfissional.procurarEmail(value) = value) {
+        return usuariosProfissional.procurarEmail(value).then(usuariosProfissional => {
+            if (usuariosProfissional) {
                 return Promise.reject('E-mail already in use');
             }
         });
-    }), UsuariosProfissional.validacoes()
+    }),
+    check('confirmarSenha').custom((value, { req }) => {
+        console.log(req.body)
+        console.log(value)
+        if (value !== req.body.senha) {
+            throw new Error('Password confirmation is incorrect');
+        }
+    })
 ], usuarioProfissionalController.cadastrarProfissional());
 
 // Solicitacoes Profissional

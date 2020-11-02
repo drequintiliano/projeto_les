@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Cadastro de Cliente</title>
+    <title>Cadastro de Profissional</title>
 
     <!-- Custom fonts for this theme -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -63,111 +63,124 @@
             <br>
             <br>
             <!-- Contact Section Heading -->
-            <h2 class="page-section-heading text-center mb-0">Cadastrar Cliente</h2>
+            <h2 class="page-section-heading text-center mb-0">Cadastrar Profissional</h2>
             <br>
             <br>
 
             <!-- Contact Section Form -->
             <div class="row">
                 <div class="col-lg-8 mx-auto">
-                    <form action="/cadastrar_cliente" method="POST" id="cadastroCliente">
-                        
-                        <div if(data.errosValidacao)>
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert" for(erro in data.errosValidacao)>
-                                ${erro.param} - ${erro.msg}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>    
-                        </div>
-    
-                        <div if(data.erroEmail)>
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                Email informado ja existe, por favor insira outro!
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>    
+                    
+                    <div if(data.errosValidacao)>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert" for(erro in data.errosValidacao)>
+                            ${erro.param} - ${erro.msg}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>    
-                        
-                        <div if(data.sucesso)>
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                Cliente cadastrado com sucesso!
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>    
-                        </div>     
+                    </div>
 
+                    <div if(data.erroEmail)>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Email informado ja existe, por favor insira outro!
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>    
+                    </div>    
+                    
+                    <div if(data.sucesso)>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            Profissional cadastrado com sucesso!
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>    
+                    </div>     
+
+                    <form action="/cadastrar_profissional" method="POST" id="cadastrarProfissional">
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">
                                 <label>Nome</label>
-                                <input class="form-control" id="nome" value="${data.cliente.nome}" name="nome" type="text" placeholder="Nome" required="required" data-validation-required-message="Please enter your name.">
+                                <input class="form-control" name="nome" value="${data.profissional.nome}" id="nome" type="text" placeholder="Nome" required="required" data-validation-required-message="Please enter your name.">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">
                                 <label>Celular</label>
-                                <input class="form-control" id="celular" value="${data.cliente.celular}" name="celular" type="tel" placeholder="Celular" required="required" data-validation-required-message="Please enter your phone number.">
+                                <input class="form-control" name="celular" value="${data.profissional.celular}" id="celular" type="tel" placeholder="Celular" required="required" data-validation-required-message="Please enter your phone number.">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                                <label>Telefone</label>
+                                <input class="form-control" name="telefone" value="${data.profissional.telefone}" id="telefone" type="tel" placeholder="Telefone" required="required" data-validation-required-message="Please enter your phone number.">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">
                                 <label>Endereço</label>
-                                <input class="form-control" id="endereco" value="${data.cliente.endereco}" name="endereco" type="text" placeholder="Endereço" required="required" data-validation-required-message="Please enter your address.">
+                                <input class="form-control" name="endereco" value="${data.profissional.endereco}" id="endereco" type="text" placeholder="Endereço" required="required" data-validation-required-message="Please enter your address.">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">
                                 <label>Cidade</label>
-                                <input class="form-control" id="cidade" value="${data.cliente.cidade}" name="cidade" type="text" placeholder="Cidade" required="required" data-validation-required-message="Please enter your city.">
+                                <input class="form-control" name="cidade" value="${data.profissional.cidade}" id="cidade" type="text" placeholder="Cidade" required="required" data-validation-required-message="Please enter your city.">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                                <label>Facebook, Instagram, Twitter...</label>
+                                <input class="form-control" name="redes_sociais" value="${data.profissional.redes_sociais}" id="redes_sociais" type="text" placeholder="Redes Sociais" required="required" data-validation-required-message="Please enter your links.">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                                <label>Resumo Profissional</label>
+                                <textarea class="form-control" name="descricao" value="${data.profissional.descricao}" id="descricao" type="text" placeholder="Resumo Profissional"></textarea>
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <br>
                         <br>
-
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">
                                 <label>Email</label>
-                                <input class="form-control" id="email" value="${data.cliente.email}" name="email" type="email" placeholder="Email" required="required" data-validation-required-message="Please enter your email address.">
+                                <input class="form-control" name="email" value="${data.profissional.email}" id="email" type="email" placeholder="Email" required="required" data-validation-required-message="Please enter your email address.">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">
                                 <label>Senha</label>
-                                <input class="form-control" id="senha" value="${data.cliente.senha}" name="senha" type="password" placeholder="Senha" required="required" data-validation-required-message="Please enter your password.">
+                                <input class="form-control" name="senha" value="${data.profissional.senha}" id="senha" type="password" placeholder="Senha" required="required" data-validation-required-message="Please enter your password.">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">
                                 <label>Confirmar Senha</label>
-                                <input class="form-control" id="confirmarSenha" name="confirmarSenha" type="password" placeholder="Confirmar Senha" required="required" data-validation-required-message="Please enter your confirm password.">
+                                <input class="form-control" name="confirmarSenha" id="confirmarSenha" type="password" placeholder="Confirmar Senha" required="required" data-validation-required-message="Please enter your confirm password.">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
 
                         <br>
-                        <!-- <div id="success"></div> -->
+
                         <div class="form-group">
-                            <button type="submit" class="btn btn-light btn-xl" id="cadastrarCliente">
+                            <button type="submit" class="btn btn-light btn-xl" id="sendMessageButton">
                               <a>Cadastrar</a>
                             </button>
-                        </div>
+                        </div>                      
 
-                        <div id="myAlert" class="alert alert-success collapse">
-                            Cadastro feito com sucesso!
-                            <button type="button" class="close"  data-dismiss="alert" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-
-                    </form>               
+                    </form>
                 </div>
             </div>
 
@@ -217,26 +230,6 @@
 
     <!-- Custom scripts for this template -->
     <script src="js/freelancer.min.js"></script>
-
-    <!-- Renderizar -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="js/imgCliente.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $("form").submit(function() {
-                alert("Cadastro efetuado com sucesso!");
-                // event.preventDefault();
-                // $('#myAlert').show('fade');  
-                
-                // setTimeout(function() {
-                //     $('#myAlert').hide('fade');
-                //     document.getElementById("cadastroCliente").reset();
-                // }, 5000)    
-            });                          
-        });
-    </script>
 
 </body>
 

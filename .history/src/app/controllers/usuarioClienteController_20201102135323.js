@@ -1,10 +1,10 @@
 const UsuariosCliente = require('../models/usuariosCliente');
 const conexao = require('../config/conexao');
-const { validationResult } = require('express-validator');
+const { validationResult } = require('express-validator/check');
 
 class UsuarioClienteController {
 
-    cadastrarCliente() {
+    cadastrarProfissional() {
         return function(req, resp) {
             const form = req.body;
             const email = req.body.email;
@@ -19,7 +19,7 @@ class UsuarioClienteController {
                 console.log(form);
                 return resp.marko(
                     require(__dirname + '../../views/cadastro/cadastrar_cliente.marko'), {
-                        cliente: {},
+                        profissional: {},
                         sucesso: false,
                         erroEmail: true
                     }
@@ -27,7 +27,7 @@ class UsuarioClienteController {
             } else if (!erros.isEmpty()) {
                 return resp.marko(
                     require(__dirname + '../../views/cadastro/cadastrar_cliente.marko'), {
-                        cliente: {},
+                        profissional: {},
                         errosValidacao: erros.array()
                     }
                 );
@@ -37,7 +37,7 @@ class UsuarioClienteController {
                     .then(
                         resp.marko(
                             require(__dirname + '../../views/cadastro/cadastrar_cliente.marko'), {
-                                cliente: {},
+                                profissional: {},
                                 sucesso: true,
                                 erroEmail: false
                             }

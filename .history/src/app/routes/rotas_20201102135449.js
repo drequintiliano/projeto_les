@@ -1,10 +1,5 @@
 const routes = require('express').Router();
 const path = require('path');
-const { check } = require('express-validator');
-
-// Model
-const UsuariosProfissional = require('../models/usuariosProfissional');
-const UsuariosCliente = require('../models/usuariosCliente');
 
 // Controllers
 const SolicitacoesProfissionalController = require('../controllers/solicitacoesProfissionalController');
@@ -12,13 +7,13 @@ const UsuarioProfissionalController = require('../controllers/usuarioProfissiona
 const SolicitacoesClienteController = require('../controllers/solicitacoesClienteController');
 const UsuarioClienteController = require('../controllers/usuarioClienteController');
 const getIndex = require('../controllers/get');
+const UsuariosProfissional = require('../models/usuariosProfissional');
 
 // Instancias
 const solicitacoesProfissionalController = new SolicitacoesProfissionalController
 const usuarioProfissionalController = new UsuarioProfissionalController
 const solicitacoesClienteController = new SolicitacoesClienteController
 const usuarioClienteController = new UsuarioClienteController
-const usuariosProfissional = new UsuariosProfissional
 
 
 /*------------------------------------------------------------ Rotas Home ------------------------------------------------------------*/
@@ -87,17 +82,7 @@ routes.get('/cadastrar_profissional', function(req, res) {
     res.marko(require(__dirname + '../../views/cadastro/cadastrar_profissional.marko'), { profissional: {} });
 });
 
-routes.post('/cadastrar_profissional', [
-    check('email').custom(value => {
-        return usuariosProfissional.procurarEmail(value).then(user => {
-            console.log("user: " + user)
-            console.log("value: " + value)
-            if (usuariosProfissional.procurarEmail(value) = value) {
-                return Promise.reject('E-mail already in use');
-            }
-        });
-    }), UsuariosProfissional.validacoes()
-], usuarioProfissionalController.cadastrarProfissional());
+routes.post('/cadastrar_profissional', UsuariosProfissional.validacoes(), usuarioProfissionalController.cadastrarProfissional());
 
 // Solicitacoes Profissional
 routes.get('/perfil_profissional_solicitacoes.html', function(req, res) {
@@ -127,7 +112,7 @@ routes.get('/cadastrar_cliente', function(req, res) {
     res.marko(require(__dirname + '../../views/cadastro/cadastrar_cliente.marko'));
 });
 
-routes.post('/cadastrar_cliente', UsuariosCliente.validacoes(), usuarioClienteController.cadastrarCliente());
+routes.post('/cadastrar_cliente', usuarioClienteController.cadastrarCliente());
 
 // Solicitacoes Cliente
 routes.get('/solicitacoes_cliente', solicitacoesClienteController.listaSolicitacoes());

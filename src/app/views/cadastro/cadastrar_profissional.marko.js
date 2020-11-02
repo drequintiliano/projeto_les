@@ -36,12 +36,6 @@ function render(input, out, __component, component, state) {
     out.w(" </div>");
   }
 
-  if (data.erroEmail) {
-    out.w("<div><div class=\"alert alert-danger alert-dismissible fade show\" role=alert>Email informado ja existe, por favor insira outro! <button type=button class=close data-dismiss=alert aria-label=Close><span aria-hidden=true>&times;</span></button></div> </div>");
-  }
-
-  out.w(" ");
-
   if (data.sucesso) {
     out.w("<div><div class=\"alert alert-success alert-dismissible fade show\" role=alert>Profissional cadastrado com sucesso! <button type=button class=close data-dismiss=alert aria-label=Close><span aria-hidden=true>&times;</span></button></div> </div>");
   }
@@ -64,11 +58,13 @@ function render(input, out, __component, component, state) {
     marko_attr("value", data.profissional.email) +
     " id=email type=email placeholder=Email required=required data-validation-required-message=\"Please enter your email address.\"><p class=\"help-block text-danger\"></p></div></div><div class=control-group><div class=\"form-group floating-label-form-group controls mb-0 pb-2\"><label>Senha</label><input class=form-control name=senha" +
     marko_attr("value", data.profissional.senha) +
-    " id=senha type=password placeholder=Senha required=required data-validation-required-message=\"Please enter your password.\"><p class=\"help-block text-danger\"></p></div></div><div class=control-group><div class=\"form-group floating-label-form-group controls mb-0 pb-2\"><label>Confirmar Senha</label><input class=form-control name=confirmarSenha id=confirmarSenha type=password placeholder=\"Confirmar Senha\" required=required data-validation-required-message=\"Please enter your confirm password.\"><p class=\"help-block text-danger\"></p></div></div><br><div class=form-group><button type=submit class=\"btn btn-light btn-xl\" id=sendMessageButton><a>Cadastrar</a></button></div> </form></div></div></div></section><footer class=\"footer text-center\"><div class=container><div class=row><div class=col-lg-2><p class=\"lead mt-3\">Sorocaba - SP</p></div><div class=col-lg-8></div><div class=col-lg-2><a class=\"btn btn-outline-light btn-social mx-1\" href=#><i class=\"fab fa-fw fa-whatsapp\"></i></a><a class=\"btn btn-outline-light btn-social mx-1\" href=#><i class=\"fab fa-fw fa-facebook-f\"></i></a></div></div></div></footer><div class=\"scroll-to-top d-lg-none position-fixed \"><a class=\"js-scroll-trigger d-block text-center text-white rounded\" href=#page-top><i class=\"fa fa-chevron-up\"></i></a></div><script src=vendor/jquery/jquery.min.js></script><script src=vendor/bootstrap/js/bootstrap.bundle.min.js></script><script src=vendor/jquery-easing/jquery.easing.min.js></script><script src=js/freelancer.min.js></script>");
+    " id=senha type=password placeholder=Senha required=required data-validation-required-message=\"Please enter your password.\"><p class=\"help-block text-danger\"></p></div></div><div class=control-group><div class=\"form-group floating-label-form-group controls mb-0 pb-2\"><label>Confirmar Senha</label><input class=form-control name=confirmarSenha id=confirmarSenha" +
+    marko_attr("value", data.profissional.confirmarSenha) +
+    " type=password placeholder=\"Confirmar Senha\" required=required data-validation-required-message=\"Please enter your confirm password.\"><p class=\"help-block text-danger\"></p></div></div><br><div class=form-group><button type=submit class=\"btn btn-light btn-xl\" id=sendMessageButton><a>Cadastrar</a></button></div> </form></div></div></div></section><footer class=\"footer text-center\"><div class=container><div class=row><div class=col-lg-2><p class=\"lead mt-3\">Sorocaba - SP</p></div><div class=col-lg-8></div><div class=col-lg-2><a class=\"btn btn-outline-light btn-social mx-1\" href=#><i class=\"fab fa-fw fa-whatsapp\"></i></a><a class=\"btn btn-outline-light btn-social mx-1\" href=#><i class=\"fab fa-fw fa-facebook-f\"></i></a></div></div></div></footer><div class=\"scroll-to-top d-lg-none position-fixed \"><a class=\"js-scroll-trigger d-block text-center text-white rounded\" href=#page-top><i class=\"fa fa-chevron-up\"></i></a></div><script src=vendor/jquery/jquery.min.js></script><script src=vendor/bootstrap/js/bootstrap.bundle.min.js></script><script src=vendor/jquery-easing/jquery.easing.min.js></script><script src=js/freelancer.min.js></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "121");
+  await_reorderer_tag({}, out, __component, "117");
 
   _preferred_script_location_tag({}, out);
 

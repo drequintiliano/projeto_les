@@ -88,14 +88,13 @@ routes.get('/cadastrar_profissional', function(req, res) {
 });
 
 routes.post('/cadastrar_profissional', [
-    check('email').custom(value => {
-        return usuariosProfissional.procurarEmail(value).then(user => {
-            console.log("user: " + user)
+    check('email').custom((value, { req }) => {
+        if (usuariosProfissional.procurarEmail(value)) {
             console.log("value: " + value)
-            if (usuariosProfissional.procurarEmail(value) = value) {
-                return Promise.reject('E-mail already in use');
-            }
-        });
+            console.log("email: " + req.body.email)
+            throw new Error('O e-mail informado ja existe, insira outro por favor.');
+        }
+        return true
     }), UsuariosProfissional.validacoes()
 ], usuarioProfissionalController.cadastrarProfissional());
 

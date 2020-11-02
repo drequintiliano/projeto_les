@@ -60,6 +60,8 @@ class UsuariosProfissional {
     }
 
     static validacoes() {
+        const usuariosProfissional = new UsuariosProfissional
+
         return [
             check('nome').isLength({ min: 5 }).withMessage('O nome precisa ter no mínimo 5 caracteres.'),
             check('senha').isLength({ min: 5 }).withMessage('A senha precisa ter no mínimo 5 caracteres.'),
@@ -70,8 +72,7 @@ class UsuariosProfissional {
                     throw new Error('O campo "senha" e "confirmar senha" devem ser iguais.');
                 }
                 return true
-            }),
-
+            })
         ];
     }
 }

@@ -1,5 +1,4 @@
 const conexao = require('../config/conexao');
-const { check } = require('express-validator');
 
 class UsuariosCliente {
 
@@ -39,7 +38,7 @@ class UsuariosCliente {
 
     procurarEmail(email) {
         return new Promise((resolve, reject) => {
-            const sql = `SELECT email FROM usuariosCliente WHERE email = ?`;
+            const sql = `SELECT email FROM usuariosProfissional WHERE email = ?`;
 
             conexao.query(sql, [email], (erro, resultados) => {
                 if (erro) {
