@@ -14,33 +14,37 @@ class UsuarioProfissionalController {
 
             const erros = validationResult(req);
 
-            if (!usuariosProfissional.procurarEmail(email)) {
-                console.log("Email informado ja existe, por favor insira outro.");
+            usuariosProfissional.procurarEmail(email).then((usuariosProfissional) => {
+                if (email) {
+                    console.log("Email informado ja existe, por favor insira outro.");
+                    erroEmail = true;
 
-                console.log(form);
-                return resp.marko(
-                    require(__dirname + '../../views/cadastro/cadastrar_profissional.marko'), {
-                        profissional: {},
-                        sucesso: false,
-                        erroEmail: true
-                    }
-                );
-            } else if (!erros.isEmpty()) {
+                    return resp.marko(
+                        require(__dirname + '../../views/cadastro/cadastrar_profissional.marko'), {
+                            profissional: {},
+                            erroEmail: true
+                        }
+                    );
+                }
+            })
+
+            if (!erros.isEmpty()) {
                 return resp.marko(
                     require(__dirname + '../../views/cadastro/cadastrar_profissional.marko'), {
                         profissional: {},
                         errosValidacao: erros.array()
                     }
                 );
-            } else {
+            }
+
+            if (erros.isEmpty() && !erroEmail) {
                 console.log(form);
                 usuariosProfissional.adiciona(form)
                     .then(
                         resp.marko(
                             require(__dirname + '../../views/cadastro/cadastrar_profissional.marko'), {
                                 profissional: {},
-                                sucesso: true,
-                                erroEmail: false
+                                sucesso: true
                             }
                         ))
                     .catch(erro => console.log(erro))

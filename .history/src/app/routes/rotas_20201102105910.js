@@ -8,7 +8,6 @@ const UsuarioProfissionalController = require('../controllers/usuarioProfissiona
 const SolicitacoesClienteController = require('../controllers/solicitacoesClienteController');
 const UsuarioClienteController = require('../controllers/usuarioClienteController');
 const getIndex = require('../controllers/get');
-const UsuariosProfissional = require('../models/usuariosProfissional');
 
 // Instancias
 const solicitacoesProfissionalController = new SolicitacoesProfissionalController
@@ -80,10 +79,10 @@ routes.get('/perfil_profissional_servicos.html', function(req, res) {
 
 // Cadastro Profissional
 routes.get('/cadastrar_profissional', function(req, res) {
-    res.marko(require(__dirname + '../../views/cadastro/cadastrar_profissional.marko'), { profissional: {} });
+    res.marko(require(__dirname + '../../views/cadastro/cadastrar_profissional.marko'));
 });
 
-routes.post('/cadastrar_profissional', UsuariosProfissional.validacoes(), usuarioProfissionalController.cadastrarProfissional());
+routes.post('/cadastrar_profissional', , usuarioProfissionalController.cadastrarProfissional());
 
 // Solicitacoes Profissional
 routes.get('/perfil_profissional_solicitacoes.html', function(req, res) {

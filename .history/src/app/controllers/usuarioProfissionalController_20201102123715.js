@@ -14,7 +14,7 @@ class UsuarioProfissionalController {
 
             const erros = validationResult(req);
 
-            if (!usuariosProfissional.procurarEmail(email)) {
+            if (usuariosProfissional.procurarEmail(email)) {
                 console.log("Email informado ja existe, por favor insira outro.");
 
                 console.log(form);

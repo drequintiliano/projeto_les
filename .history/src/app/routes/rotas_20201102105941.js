@@ -80,7 +80,7 @@ routes.get('/perfil_profissional_servicos.html', function(req, res) {
 
 // Cadastro Profissional
 routes.get('/cadastrar_profissional', function(req, res) {
-    res.marko(require(__dirname + '../../views/cadastro/cadastrar_profissional.marko'), { profissional: {} });
+    res.marko(require(__dirname + '../../views/cadastro/cadastrar_profissional.marko'));
 });
 
 routes.post('/cadastrar_profissional', UsuariosProfissional.validacoes(), usuarioProfissionalController.cadastrarProfissional());

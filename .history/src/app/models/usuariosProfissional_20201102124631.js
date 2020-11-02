@@ -61,7 +61,8 @@ class UsuariosProfissional {
     static validacoes() {
         return [
             check('senha').isLength({ min: 5 }).withMessage('A senha precisa ter no mínimo 5 caracteres!'),
-            check('nome').isLength({ min: 5 }).withMessage('O nome precisa ter no mínimo 5 caracteres!')
+            check('nome').isLength({ min: 5 }).withMessage('O nome precisa ter no mínimo 5 caracteres!'),
+            check('email').procurarEmail(email).withMessage('Email informado ja existe, por favor insira outro.')
         ];
     }
 }

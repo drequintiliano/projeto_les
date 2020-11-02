@@ -1,5 +1,4 @@
 const conexao = require('../config/conexao');
-const { check } = require('express-validator/check');
 class UsuariosProfissional {
 
     constructor(conexao) {
@@ -60,8 +59,7 @@ class UsuariosProfissional {
 
     static validacoes() {
         return [
-            check('senha').isLength({ min: 5 }).withMessage('A senha precisa ter no mínimo 5 caracteres!'),
-            check('nome').isLength({ min: 5 }).withMessage('O nome precisa ter no mínimo 5 caracteres!')
+            check('senha').isLength({ min: 5 }).withMessage('A senha precisa ter no minimno 5 caracteres!'),
         ];
     }
 }
