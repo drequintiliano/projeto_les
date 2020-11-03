@@ -56,37 +56,10 @@ class UsuariosCliente {
         });
     }
 
-    isEmpty(obj) {
-        for (var prop in obj) {
-            if (obj.hasOwnProperty(prop))
-                return false;
-        }
-        return true;
-    }
-
-
     static validacoes() {
         return [
-            check('nome').isLength({ min: 5 }).withMessage('O nome precisa ter no mínimo 5 caracteres.'),
-            check('email').custom(value => {
-                const usuariosCliente = new UsuariosCliente(conexao);
-
-                return usuariosCliente.procurarEmail(value).then(user => {
-                    if (!usuariosCliente.isEmpty(user)) {
-                        console.log("email ja existe: " + value)
-                        return Promise.reject('O e-mail informado ja está em uso, por favor insira outro.');
-                    }
-                });
-            }),
-            check('senha').isLength({ min: 5 }).withMessage('A senha precisa ter no mínimo 5 caracteres.'),
-            check('senha').custom((value, { req }) => {
-                if (value !== req.body.confirmarSenha) {
-                    console.log("senha: " + value)
-                    console.log("confirmarSenha: " + req.body.confirmarSenha)
-                    throw new Error('O campo "senha" e "confirmar senha" devem ser iguais.');
-                }
-                return true
-            })
+            check('senha').isLength({ min: 5 }).withMessage('A senha precisa ter no mínimo 5 caracteres!'),
+            check('nome').isLength({ min: 5 }).withMessage('O nome precisa ter no mínimo 5 caracteres!')
         ];
     }
 }

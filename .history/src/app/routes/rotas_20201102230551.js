@@ -1,5 +1,6 @@
 const routes = require('express').Router();
 const path = require('path');
+const { check } = require('express-validator');
 
 // Model
 const UsuariosProfissional = require('../models/usuariosProfissional');
@@ -17,6 +18,7 @@ const solicitacoesProfissionalController = new SolicitacoesProfissionalControlle
 const usuarioProfissionalController = new UsuarioProfissionalController
 const solicitacoesClienteController = new SolicitacoesClienteController
 const usuarioClienteController = new UsuarioClienteController
+const usuariosProfissional = new UsuariosProfissional
 
 
 /*------------------------------------------------------------ Rotas Home ------------------------------------------------------------*/
@@ -85,7 +87,19 @@ routes.get('/cadastrar_profissional', function(req, res) {
     res.marko(require(__dirname + '../../views/cadastro/cadastrar_profissional.marko'), { profissional: {} });
 });
 
-routes.post('/cadastrar_profissional', UsuariosProfissional.validacoes(), usuarioProfissionalController.cadastrarProfissional());
+routes.post('/cadastrar_profissional', [
+    check('email').custom(value => {
+        return usuariosProfissional.procurarEmail(value).then((usuariosProfissional) => {
+            console.log("user: " + user)
+            console.log("value: " + value)
+            console.log(usuariosProfissional)
+            console.log(usuariosProfissional.procurarEmail(value))
+            if (usuariosProfissional) {
+                return Promise.reject('E-mail already in use');
+            }
+        });
+    }), UsuariosProfissional.validacoes()
+], usuarioProfissionalController.cadastrarProfissional());
 
 // Solicitacoes Profissional
 routes.get('/perfil_profissional_solicitacoes.html', function(req, res) {
@@ -112,7 +126,7 @@ routes.get('/perfil_cliente_solicitacoes.html', function(req, res) {
 
 // Cadastro Cliente
 routes.get('/cadastrar_cliente', function(req, res) {
-    res.marko(require(__dirname + '../../views/cadastro/cadastrar_cliente.marko'), { cliente: {} });
+    res.marko(require(__dirname + '../../views/cadastro/cadastrar_cliente.marko'));
 });
 
 routes.post('/cadastrar_cliente', UsuariosCliente.validacoes(), usuarioClienteController.cadastrarCliente());

@@ -112,7 +112,7 @@ routes.get('/perfil_cliente_solicitacoes.html', function(req, res) {
 
 // Cadastro Cliente
 routes.get('/cadastrar_cliente', function(req, res) {
-    res.marko(require(__dirname + '../../views/cadastro/cadastrar_cliente.marko'), { cliente: {} });
+    res.marko(require(__dirname + '../../views/cadastro/cadastrar_cliente.marko'));
 });
 
 routes.post('/cadastrar_cliente', UsuariosCliente.validacoes(), usuarioClienteController.cadastrarCliente());

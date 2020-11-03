@@ -21,12 +21,12 @@ class UsuarioClienteController {
                     }
                 );
             } else {
-                console.log("sucesso: " + form);
+                console.log(form);
                 usuariosCliente.adiciona(form)
                     .then(
                         resp.marko(
                             require(__dirname + '../../views/cadastro/cadastrar_cliente.marko'), {
-                                cliente: {},
+                                profissional: {},
                                 sucesso: true,
                             }
                         ))

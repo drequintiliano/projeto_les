@@ -1,5 +1,8 @@
 const routes = require('express').Router();
 const path = require('path');
+const { check } = require('express-validator');
+const { validationResult } = require('express-validator');
+const conexao = require('../config/conexao');
 
 // Model
 const UsuariosProfissional = require('../models/usuariosProfissional');
@@ -85,7 +88,20 @@ routes.get('/cadastrar_profissional', function(req, res) {
     res.marko(require(__dirname + '../../views/cadastro/cadastrar_profissional.marko'), { profissional: {} });
 });
 
-routes.post('/cadastrar_profissional', UsuariosProfissional.validacoes(), usuarioProfissionalController.cadastrarProfissional());
+routes.post('/cadastrar_profissional', [
+    check('email').custom(value => {
+        const usuariosProfissional = new UsuariosProfissional(conexao);
+
+        return usuariosProfissional.procurarEmail(value).then(user => {
+            console.log(user)
+            console.log(value)
+            if (!user.isEmpty()) {
+                console.log("entrou if")
+                return Promise.reject('E-mail already in use');
+            }
+        });
+    }), UsuariosProfissional.validacoes()
+], usuarioProfissionalController.cadastrarProfissional());
 
 // Solicitacoes Profissional
 routes.get('/perfil_profissional_solicitacoes.html', function(req, res) {
@@ -112,7 +128,7 @@ routes.get('/perfil_cliente_solicitacoes.html', function(req, res) {
 
 // Cadastro Cliente
 routes.get('/cadastrar_cliente', function(req, res) {
-    res.marko(require(__dirname + '../../views/cadastro/cadastrar_cliente.marko'), { cliente: {} });
+    res.marko(require(__dirname + '../../views/cadastro/cadastrar_cliente.marko'));
 });
 
 routes.post('/cadastrar_cliente', UsuariosCliente.validacoes(), usuarioClienteController.cadastrarCliente());

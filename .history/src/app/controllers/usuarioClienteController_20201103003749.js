@@ -21,7 +21,7 @@ class UsuarioClienteController {
                     }
                 );
             } else {
-                console.log("sucesso: " + form);
+                console.log(form);
                 usuariosCliente.adiciona(form)
                     .then(
                         resp.marko(

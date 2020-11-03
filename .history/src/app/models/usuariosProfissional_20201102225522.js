@@ -1,5 +1,6 @@
 const conexao = require('../config/conexao');
 const { check } = require('express-validator');
+const { body } = require('express-validator');
 class UsuariosProfissional {
 
     constructor(conexao) {
@@ -43,46 +44,24 @@ class UsuariosProfissional {
         })
     }
 
-    procurarEmail(email) {
+    static procurarEmail(email) {
         return new Promise((resolve, reject) => {
-            conexao.query(
-                `
-                    SELECT *
-                    FROM usuariosProfissional
-                    WHERE email = ?
-                `, [email],
-                (erro, usuario) => {
-                    if (erro) {
-                        return reject('Não foi possível encontrar o usuário!');
-                    }
+            const sql = `SELECT email FROM usuariosProfissional WHERE email = ?`;
 
-                    return resolve(usuario);
+            conexao.query(sql, [email], (erro, resultados) => {
+                if (erro) {
+                    console.log(erro);
+                    return reject('Não foi possivel executar a função procurarEmail' + erro);
+                } else {
+                    return resolve();
                 }
-            )
-        });
-    }
-
-    isEmpty(obj) {
-        for (var prop in obj) {
-            if (obj.hasOwnProperty(prop))
-                return false;
-        }
-        return true;
+            })
+        })
     }
 
     static validacoes() {
         return [
             check('nome').isLength({ min: 5 }).withMessage('O nome precisa ter no mínimo 5 caracteres.'),
-            check('email').custom(value => {
-                const usuariosProfissional = new UsuariosProfissional(conexao);
-
-                return usuariosProfissional.procurarEmail(value).then(user => {
-                    if (!usuariosProfissional.isEmpty(user)) {
-                        console.log("email ja existe: " + value)
-                        return Promise.reject('O e-mail informado ja está em uso, por favor insira outro.');
-                    }
-                });
-            }),
             check('senha').isLength({ min: 5 }).withMessage('A senha precisa ter no mínimo 5 caracteres.'),
             check('senha').custom((value, { req }) => {
                 if (value !== req.body.confirmarSenha) {
@@ -91,7 +70,8 @@ class UsuariosProfissional {
                     throw new Error('O campo "senha" e "confirmar senha" devem ser iguais.');
                 }
                 return true
-            })
+            }),
+
         ];
     }
 }

@@ -8,7 +8,7 @@ class UsuarioClienteController {
         return function(req, resp) {
             const form = req.body;
 
-            const usuariosCliente = new UsuariosCliente(conexao);
+            const usuariosCliente = new UsuariosClieusuariosCliente(conexao);
 
             const erros = validationResult(req);
 
@@ -21,12 +21,12 @@ class UsuarioClienteController {
                     }
                 );
             } else {
-                console.log("sucesso: " + form);
+                console.log(form);
                 usuariosCliente.adiciona(form)
                     .then(
                         resp.marko(
                             require(__dirname + '../../views/cadastro/cadastrar_cliente.marko'), {
-                                cliente: {},
+                                profissional: {},
                                 sucesso: true,
                             }
                         ))

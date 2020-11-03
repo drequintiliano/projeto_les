@@ -70,26 +70,35 @@
             <!-- Contact Section Form -->
             <div class="row">
                 <div class="col-lg-8 mx-auto">
-                    
-                    <div if(data.errosValidacao)>
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert" for(erro in data.errosValidacao)>
-                            ${erro.param} - ${erro.msg}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>    
-                    </div>
-                    
-                    <div if(data.sucesso)>
-                        <div id="alertSucesso" class="alert alert-success alert-dismissible fade show" role="alert">
-                            Cliente cadastrado com sucesso!
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>    
-                    </div>     
-                    
                     <form action="/cadastrar_cliente" method="POST" id="cadastroCliente">
+                        
+                        <div if(data.errosValidacao)>
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert" for(erro in data.errosValidacao)>
+                                ${erro.param} - ${erro.msg}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>    
+                        </div>
+    
+                        <div if(data.erroEmail)>
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                Email informado ja existe, por favor insira outro!
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>    
+                        </div>    
+                        
+                        <div if(data.sucesso)>
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                Cliente cadastrado com sucesso!
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>    
+                        </div>     
+
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">
                                 <label>Nome</label>
@@ -144,7 +153,7 @@
                         </div>
 
                         <br>
-                        
+                        <!-- <div id="success"></div> -->
                         <div class="form-group">
                             <button type="submit" class="btn btn-light btn-xl" id="cadastrarCliente">
                               <a>Cadastrar</a>
