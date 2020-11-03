@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Portal de Serviços</title>
+    <title>Login</title>
 
     <!-- Custom fonts for this theme -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -50,71 +50,60 @@
             </div>
 
             <button type="button" class="btn btn-light">
-              <a  href="cadastro.html">Cadastrar</a>
+              <a  href="cadastro.html">Cadastrar</a>  
             </button>
 
         </div>
     </nav>
 
-    <!-- Portfolio Section -->
-    <section class="page-section portfolio" id="portfolio">
+    <!-- Contact Section -->
+    <section class="page-section" id="contact">
         <div class="container">
 
             <br>
             <br>
-            <!-- Portfolio Section Heading -->
-            <h2 class="page-section-heading text-center mb-0">Escolha a forma de cadastro</h2>
-            <br>
+            <!-- Contact Section Heading -->
+            <h2 class="page-section-heading text-center mb-0">Login</h2>
             <br>
             <br>
 
-            <!-- Portfolio Grid Items -->
+            <!-- Contact Section Form -->
             <div class="row">
-
-                <!-- Portfolio Item 1 -->
-                <div class="col-md-6 col-lg-6" style="text-align: center">
-                    <div class="portfolio-item mx-auto">
-                        <p>
-                            <h1>
-                                Cadastrar para contratar serviços
-                            </h1>
-                        </p>
-                        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                            <a href="cadastrar_cliente">
-                                <div class="portfolio-item-caption-content text-center text-white">
-                                    <i class="fas fa-plus fa-3x"></i>
-                                </div>
-                            </a>
+                <div class="col-lg-8 mx-auto">
+                    <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
+                    <form action="/login" method="POST" id="login">
+                        <div class="control-group">
+                            <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                                <label for="email">Email</label>
+                                <input class="form-control" id="email" name="email" type="email" placeholder="E-mail" required="required" data-validation-required-message="Por favor, coloque o email">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                                <label for="senha">Senha</label>
+                                <input type="password" class="form-control" id="senha" name="senha" type="password" placeholder="Senha" required="required" data-validation-required-message="Por favor, coloque a senha">
+                                <p class="help-block text-danger"></p>
+                            </div>
                         </div>
 
-                    </div>
-                </div>
-
-                <!-- Portfolio Item 2 -->
-                <div class="col-md-6 col-lg-6" style="text-align: center">
-                    <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal2">
-                        <p>
-                            <h1>
-                                Cadastrar para prestar serviços
-                            </h1>
-                        </p>
-                        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                            <a href="cadastrar_profissional">
-                                <div class="portfolio-item-caption-content text-center text-white">
-                                    <i class="fas fa-plus fa-3x"></i>
-                                </div>
-                            </a>
+                        <br>
+                        <br>
+                        
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-light btn-xl" id="sendMessageButton">
+                              <a>Conectar</a>
+                            </button>
                         </div>
-
-                    </div>
+                    </form>
                 </div>
-
-
             </div>
-            <!-- /.row -->
 
         </div>
     </section>
+
+    
+    <!-- Footer -->
 
 
 

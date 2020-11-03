@@ -10,6 +10,7 @@ const SolicitacoesProfissionalController = require('../controllers/solicitacoesP
 const UsuarioProfissionalController = require('../controllers/usuarioProfissionalController');
 const SolicitacoesClienteController = require('../controllers/solicitacoesClienteController');
 const UsuarioClienteController = require('../controllers/usuarioClienteController');
+const LoginController = require('../controllers/loginController');
 const getIndex = require('../controllers/get');
 
 // Instancias
@@ -17,6 +18,7 @@ const solicitacoesProfissionalController = new SolicitacoesProfissionalControlle
 const usuarioProfissionalController = new UsuarioProfissionalController
 const solicitacoesClienteController = new SolicitacoesClienteController
 const usuarioClienteController = new UsuarioClienteController
+const loginController = new LoginController
 
 
 /*------------------------------------------------------------ Rotas Home ------------------------------------------------------------*/
@@ -32,13 +34,15 @@ routes.get('/contact.html', function(req, res) {
     res.sendFile(path.resolve(__dirname + '../../views/contact.html'));
 });
 
-routes.get('/login.html', function(req, res) {
-    res.sendFile(path.resolve(__dirname + '../../views/login.html'));
-});
-
 routes.get('/cadastro.html', function(req, res) {
     res.sendFile(path.resolve(__dirname + '../../views/cadastro/cadastro.html'));
 });
+
+routes.get('/login', function(req, res) {
+    res.marko(require(__dirname + '../../views/login.marko'));
+});
+
+routes.post('/login', loginController.efetuaLogin());
 
 
 /*------------------------------------------------------------ Rotas Serviços ------------------------------------------------------------*/

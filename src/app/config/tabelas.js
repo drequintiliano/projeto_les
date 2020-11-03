@@ -8,6 +8,9 @@ class Tabelas {
         this.criarSolicitacoesProfissional();
         this.criarServicos();
         this.criarSolicitacoesCliente();
+        this.criarUsuarios();
+        // this.insertUsuariosProfissional();
+        // this.insertUsuariosCliente();
     }
 
     criarUsuariosProfissional() {
@@ -118,6 +121,53 @@ class Tabelas {
                 console.log('Erro ao executar create solicitacoesCliente: ' + erro);
             } else {
                 console.log('Tabela solicitacoesCliente criada com sucesso')
+            }
+        })
+    }
+
+    criarUsuarios() {
+        const sql = 'CREATE TABLE IF NOT EXISTS usuarios' +
+            '(id int NOT NULL AUTO_INCREMENT,' +
+            'data TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,' +
+            'email varchar(50),' +
+            'senha varchar(30),' +
+            'idUsuario int NOT NULL,' +
+            'idTabela int NOT NULL,' +
+            'PRIMARY KEY(id))'
+
+        this.conexao.query(sql, (erro) => {
+            if (erro) {
+                console.log('Erro ao executar create usuarios: ' + erro);
+            } else {
+                console.log('Tabela usuarios criada com sucesso')
+            }
+        })
+    }
+
+    insertUsuariosProfissional() {
+        const sql = `INSERT INTO usuarios (email, senha, idUsuario, idTabela)
+                        SELECT usuariosProfissional.email, usuariosProfissional.senha, usuariosProfissional.id, 1
+                        FROM usuariosProfissional`
+
+        this.conexao.query(sql, (erro) => {
+            if (erro) {
+                console.log('Erro ao executar insert usuariosProfissional: ' + erro);
+            } else {
+                console.log('Insert usuariosProfissional executado')
+            }
+        })
+    }
+
+    insertUsuariosCliente() {
+        const sql = `INSERT INTO usuarios (email, senha, idUsuario, idTabela)
+                        SELECT usuariosCliente.email, usuariosCliente.senha, usuariosCliente.id, 2
+                        FROM usuariosCliente`
+
+        this.conexao.query(sql, (erro) => {
+            if (erro) {
+                console.log('Erro ao executar insert usuariosCliente: ' + erro);
+            } else {
+                console.log('Insert usuariosCliente executado')
             }
         })
     }
