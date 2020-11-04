@@ -25,9 +25,12 @@ class Login {
                         return next(erro);
                     }
 
-                    console.log("redirecionar...")
-                    console.log("red. user:" + user)
-                    return resp.redirect('/profissional_index.html')
+                    console.log("redirecionar para: " + user[0].tipo)
+                    if (user[0].tipo == 1) {
+                        return resp.redirect('/perfil_profissional.html')
+                    } else {
+                        return resp.redirect('perfil_cliente.html')
+                    }
                 });
             })(req, resp, next);
         };

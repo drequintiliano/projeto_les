@@ -8,7 +8,7 @@ class Tabelas {
         this.criarSolicitacoesProfissional();
         this.criarServicos();
         this.criarSolicitacoesCliente();
-        this.criarUsuarios();
+        // this.criarUsuarios();
         // this.insertUsuariosProfissional();
         // this.insertUsuariosCliente();
     }

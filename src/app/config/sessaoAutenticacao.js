@@ -19,7 +19,7 @@ module.exports = (app) => {
                 .then(user => {
                     console.log("user array: " + user[0].email)
                     console.log("user array: " + user[0].senha)
-                    console.log("user array: " + user[0].idTabela)
+                    console.log("user array: " + user[0].tipo)
 
                     if (!user[0] || senha != user[0].senha) {
                         console("entrou if: " + user[0])
