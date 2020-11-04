@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Perfil Cliente</title>
+    <title>Perfil Profissional</title>
 
     <!-- Custom fonts for this theme -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -35,7 +35,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav">
                     <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="cliente_index.html">Serviços</a>
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="profissional_index.html">Serviços</a>
                     </li>
                     <li class="nav-item mx-0 mx-lg-1">
                         <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="about.html">Sobre</a>
@@ -50,7 +50,7 @@
             </div>
 
             <button type="button" class="btn btn-light">
-              <a  href="perfil_cliente.html">Perfil</a>
+              <a  href="perfil_profissional.html">Perfil</a>
             </button>
 
         </div>
@@ -63,14 +63,15 @@
             <br>
             <br>
             <!-- Contact Section Heading -->
-            <h2 class="page-section-heading text-center mb-0">Perfil Cliente</h2>
+            <h2 class="page-section-heading text-center mb-0">Perfil Profissional</h2>
             <br>
             <br>
 
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item active" aria-current="page">Perfil</li>
-                    <li class="breadcrumb-item"><a href="solicitacoes_cliente">Solicitações</a></li>
+                    <li class="breadcrumb-item"><a href="perfil_profissional_servicos.html">Serviços</a></li>
+                    <li class="breadcrumb-item"><a href="solicitacoes_profissional">Solicitações</a></li>
                 </ol>
             </nav>
 
@@ -84,8 +85,12 @@
                         </div>
                         <div class="col-sm-4 mr-auto py-2" align="center">
                             <div class="mt-2">
-                                <h4>Adoniran Barbosa</h4>
+                                <h4>${data.profissional.nome}</h4>
                             </div>
+                            <div class="profissao">
+                                <label>Resumo Profissional</label>
+                                <p>${data.profissional.descricao}</p>
+                            </div>                           
                         </div>
                     </div>
                     <div class="row py-2">
@@ -93,7 +98,7 @@
                             <label for="endereco" class="col-sm-2 col-form-label">Endereço</label>
                         </div>
                         <div class="col-sm-4 mr-auto py-2">
-                            <input id="endereco" class="form-control" type="text" placeholder="Rua José Santiago da Silva, 311" disabled>
+                            <input id="endereco" class="form-control" type="text" value="${data.profissional.endereco}" disabled>
                         </div>
                     </div>
                     <div class="row py-2">
@@ -101,7 +106,7 @@
                             <label for="email" class="col-sm-2 col-form-label">Email</label>
                         </div>
                         <div class="col-sm-4 mr-auto py-2">
-                            <input id="email" class="form-control" type="text" placeholder="jose_saramago@email.com" disabled>
+                            <input id="email" class="form-control" type="text" value="${data.profissional.email}" disabled>
                         </div>
                     </div>
                     <div class="row py-2">
@@ -109,7 +114,7 @@
                             <label for="telefone" class="col-sm-2 col-form-label">Telefone</label>
                         </div>
                         <div class="col-sm-4 mr-auto py-2">
-                            <input id="telefone" class="form-control" type="text" placeholder="(15) 3232-2323" disabled>
+                            <input id="telefone" class="form-control" type="text" value="${data.profissional.telefone}" disabled>
                         </div>
                     </div>
                     <div class="row py-2">
@@ -117,7 +122,15 @@
                             <label for="celular" class="col-sm-2 col-form-label">Celular</label>
                         </div>
                         <div class="col-sm-4 mr-auto py-2">
-                            <input id="celular" class="form-control" type="text" placeholder="(15) 99880-2323" disabled>
+                            <input id="celular" class="form-control" type="text" value="${data.profissional.celular}" disabled>
+                        </div>
+                    </div>
+                    <div class="row py-2">
+                        <div class="col-sm-2 ml-auto py-2">
+                            <label for="links" class="col-sm-2 col-form-label">Links</label>
+                        </div>
+                        <div class="col-sm-4 mr-auto py-2">
+                            <input id="links" class="form-control" type="text" value="${data.profissional.redes_sociais}" disabled>
                         </div>
                     </div>
                     <div class="row py-2 mt-4 justify-content-center">
@@ -130,7 +143,7 @@
                         <br>
                         <div class="col-sm-2">
                             <button type="button" class="btn btn-light">
-                                <a  href="#">Logout</a>
+                                <a  href="/index.html">Logout</a>
                               </button>
                         </div>
                     </div>

@@ -35,6 +35,21 @@ class UsuarioProfissionalController {
         };
     }
 
+    listarProfissional() {
+        return function(req, resp) {
+            const id = req.params.id;
+
+            const usuariosProfissional = new UsuariosProfissional(conexao);
+            usuariosProfissional.procurarId(id)
+                .then(usuario => res.marko(
+                    require('../views/perfil/cliente/perfil_profissional.marko'), {
+                        profissional: usuario,
+                    }
+                ))
+                .catch(erro => console.log(erro));
+        }
+    }
+
     alterarProfissional() {
 
     }

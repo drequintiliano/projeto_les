@@ -62,6 +62,21 @@ class UsuariosProfissional {
         });
     }
 
+    procurarId(id) {
+        return new Promise((resolve, reject) => {
+            const sql = 'SELECT * FROM usuariosProfissional WHERE id = ?'
+
+            conexao.query(sql, [id], (erro, usuario) => {
+                if (erro) {
+                    return reject('Não foi possível encontrar o usuário! ' + erro);
+                } else {
+                    console.log("procurarId: " + JSON.stringify(usuario))
+                    return resolve(usuario);
+                }
+            })
+        });
+    }
+
     isEmpty(obj) {
         for (var prop in obj) {
             if (obj.hasOwnProperty(prop))

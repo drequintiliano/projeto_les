@@ -22,7 +22,7 @@ module.exports = (app) => {
                     console.log("user array: " + user[0].tipo)
 
                     if (!user[0] || senha != user[0].senha) {
-                        console("entrou if: " + user[0])
+                        console.log("entrou if: " + user[0])
                         return done(null, false, {
                             mensagem: 'Login e senha incorretos!'
                         });
@@ -40,6 +40,7 @@ module.exports = (app) => {
             email: user.email
         };
 
+        console.log("usuario sessao: " + JSON.stringify(usuarioSessao));
         done(null, usuarioSessao);
     });
 

@@ -70,7 +70,16 @@
             <!-- Contact Section Form -->
             <div class="row">
                 <div class="col-lg-8 mx-auto">
-                    <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
+
+                    <div if(data.erro)>
+                        <div id="alertErro" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Informações de login e senha incorretas!
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>    
+                    </div>     
+
                     <form action="/login" method="POST" id="login">
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">

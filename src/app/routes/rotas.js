@@ -76,9 +76,9 @@ routes.get('/profissional_index.html', function(req, res) {
     res.sendFile(path.resolve(__dirname + '../../views/perfil/profissional/profissional_index.html'));
 });
 
-routes.get('/perfil_profissional.html', function(req, res) {
-    res.sendFile(path.resolve(__dirname + '../../views/perfil/profissional/perfil_profissional.html'));
-});
+// routes.get('/perfil_profissional', function(req, res) {
+//     res.marko(require(__dirname + '../../views/perfil/profissional/perfil_profissional.marko', { profissional: usuario }));
+// });
 
 routes.get('/perfil_profissional_servicos.html', function(req, res) {
     res.sendFile(path.resolve(__dirname + '../../views/perfil/profissional/perfil_profissional_servicos.html'));
@@ -106,8 +106,8 @@ routes.get('/cliente_index.html', function(req, res) {
     res.sendFile(path.resolve(__dirname + '../../views/perfil/cliente/cliente_index.html'));
 });
 
-routes.get('/perfil_cliente.html', function(req, res) {
-    res.sendFile(path.resolve(__dirname + '../../views/perfil/cliente/perfil_cliente.html'));
+routes.get('/perfil_cliente', function(req, res) {
+    res.marko(require(__dirname + '../../views/perfil/cliente/perfil_cliente.marko'));
 });
 
 routes.get('/perfil_cliente_solicitacoes.html', function(req, res) {
