@@ -29,4 +29,4 @@ class SolicitacaoClienteController {
     }
 }
 
-module.exports = SolicitacaoClienteController
+module.exports = SolicitacaoClienteController;

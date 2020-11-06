@@ -10190,4 +10190,6 @@ form .row:first-child .floating-label-form-group {
     opacity: 1;
     background-color: rgba(26, 188, 156, .2);
     border-radius: 10px;
+    cursor: hand;
+    cursor: pointer;
 }

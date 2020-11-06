@@ -120,13 +120,14 @@ class Tabelas {
             '(id int NOT NULL AUTO_INCREMENT,' +
             'data TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,' +
             'titulo varchar(50),' +
+            'caminho_img varchar(200) NOT NULL,' +
             'id_profissional int NOT NULL,' +
             'id_categoria int NOT NULL,' +
             'categoria varchar(50),' +
             'descricao varchar(500) NOT NULL,' +
-            'qualidade  decimal(2,2) NOT NULL,' +
-            'pontualidade  decimal(2,2) NOT NULL,' +
-            'execucao decimal(2,2) NOT NULL,' +
+            'qualidade  decimal(5,2) NOT NULL,' +
+            'pontualidade  decimal(5,2) NOT NULL,' +
+            'execucao decimal(5,2) NOT NULL,' +
             'id_avaliacoes int,' +
             'quantidade_avaliacoes int NOT NULL DEFAULT 0,' +
             'PRIMARY KEY(id),' +
@@ -147,9 +148,9 @@ class Tabelas {
             'data TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,' +
             'id_cliente int NOT NULL,' +
             'id_servico int NOT NULL,' +
-            'qualidade  decimal(2,2) NOT NULL,' +
-            'pontualidade  decimal(2,2) NOT NULL,' +
-            'execucao decimal(2,2) NOT NULL,' +
+            'qualidade  decimal(5,2) NOT NULL,' +
+            'pontualidade  decimal(5,2) NOT NULL,' +
+            'execucao decimal(5,2) NOT NULL,' +
             'avaliacoes int,' +
             'PRIMARY KEY(id),' +
             'FOREIGN KEY(id_servico) REFERENCES servicos(id),' +

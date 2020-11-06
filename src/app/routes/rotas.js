@@ -21,6 +21,7 @@ const UsuarioProfissionalController = require('../controllers/usuarioProfissiona
 const SolicitacoesClienteController = require('../controllers/solicitacoesClienteController');
 const UsuarioClienteController = require('../controllers/usuarioClienteController');
 const LoginController = require('../controllers/loginController');
+const ServicosController = require('../controllers/servicosController');
 const getIndex = require('../controllers/get');
 
 // Instancias
@@ -29,6 +30,7 @@ const usuarioProfissionalController = new UsuarioProfissionalController
 const solicitacoesClienteController = new SolicitacoesClienteController
 const usuarioClienteController = new UsuarioClienteController
 const loginController = new LoginController
+const servicos = new ServicosController
 
 
 /*------------------------------------------------------------ Rotas Home ------------------------------------------------------------*/
@@ -56,29 +58,17 @@ routes.post('/login', loginController.efetuaLogin());
 
 
 /*------------------------------------------------------------ Rotas Serviços ------------------------------------------------------------*/
-routes.get('/cat_servicos.html', function(req, res) {
-    res.sendFile(path.resolve(__dirname + '../../views/categorias/cat_servicos.html'));
-});
+routes.get('/cat_servicos', servicos.listarServicosDomesticos());
 
-routes.get('/cat_aulas.html', function(req, res) {
-    res.sendFile(path.resolve(__dirname + '../../views/categorias/cat_aulas.html'));
-});
+routes.get('/cat_assistencias', servicos.listarAssistencia());
 
-routes.get('/cat_assistencia.html', function(req, res) {
-    res.sendFile(path.resolve(__dirname + '../../views/categorias/cat_assistencia.html'));
-});
+routes.get('/cat_aulas', servicos.listarAulas());
 
-routes.get('/cat_consultoria.html', function(req, res) {
-    res.sendFile(path.resolve(__dirname + '../../views/categorias/cat_consultoria.html'));
-});
+routes.get('/cat_reformas', servicos.listarReformas());
 
-routes.get('/cat_reforma.html', function(req, res) {
-    res.sendFile(path.resolve(__dirname + '../../views/categorias/cat_reforma.html'));
-});
+routes.get('/cat_eventos', servicos.listarEventos());
 
-routes.get('/cat_eventos.html', function(req, res) {
-    res.sendFile(path.resolve(__dirname + '../../views/categorias/cat_eventos.html'));
-});
+routes.get('/cat_consultorias', servicos.listarConsultorias());
 
 
 /*------------------------------------------------------------ Rotas Profissional ------------------------------------------------------------*/
