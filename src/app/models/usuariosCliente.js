@@ -9,7 +9,7 @@ class UsuariosCliente {
 
     adiciona(cliente) {
         return new Promise((resolve, reject) => {
-            const sql = `INSERT INTO usuariosCliente (
+            const sql = `INSERT INTO usuarios_cliente (
                 nome,
                 celular,
                 endereco,
@@ -37,12 +37,27 @@ class UsuariosCliente {
         })
     }
 
+    procurarId(id) {
+        return new Promise((resolve, reject) => {
+            const sql = 'SELECT * FROM usuarios_cliente WHERE id = ?'
+
+            conexao.query(sql, [id], (erro, usuario) => {
+                if (erro) {
+                    return reject('Não foi possível encontrar o usuário! ' + erro);
+                } else {
+                    console.log("procurarId: " + JSON.stringify(usuario))
+                    return resolve(usuario);
+                }
+            })
+        });
+    }
+
     procurarEmail(email) {
         return new Promise((resolve, reject) => {
             conexao.query(
                 `
                     SELECT *
-                    FROM usuariosCliente
+                    FROM usuarios_cliente
                     WHERE email = ?
                 `, [email],
                 (erro, usuario) => {

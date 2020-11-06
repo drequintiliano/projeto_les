@@ -17,9 +17,6 @@ module.exports = (app) => {
             const usuario = new Usuario(conexao);
             usuario.buscaPorEmail(email)
                 .then(user => {
-                    console.log("user array: " + user[0].email)
-                    console.log("user array: " + user[0].senha)
-                    console.log("user array: " + user[0].tipo)
 
                     if (!user[0] || senha != user[0].senha) {
                         console.log("entrou if: " + user[0])
@@ -36,11 +33,13 @@ module.exports = (app) => {
 
     passport.serializeUser((user, done) => {
         const usuarioSessao = {
-            nome: user.nome,
-            email: user.email
+            idUsuario: user[0].id,
+            nome: user[0].nome,
+            email: user[0].email
         };
 
-        console.log("usuario sessao: " + JSON.stringify(usuarioSessao));
+        console.log("usuario sessao: " + JSON.stringify(user));
+        console.log("usuario sessao id: " + usuarioSessao.idUsuario + " email: " + usuarioSessao.email)
         done(null, usuarioSessao);
     });
 
@@ -59,7 +58,6 @@ module.exports = (app) => {
 
     app.use(passport.initialize());
     app.use(passport.session());
-
 
     app.use(function(req, resp, next) {
         req.passport = passport;

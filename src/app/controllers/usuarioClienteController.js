@@ -35,6 +35,24 @@ class UsuarioClienteController {
         };
     }
 
+    listarCliente() {
+        return function(req, resp) {
+            console.log("listar prof: " + req.session.passport.user.idUsuario)
+
+            const id = req.session.passport.user.idUsuario;
+
+            const usuariosCliente = new UsuariosCliente(conexao);
+            usuariosCliente.procurarId(id)
+                .then(cliente => resp.marko(
+                    require('../views/perfil/cliente/perfil_cliente.marko'), {
+                        cliente: cliente[0],
+                    },
+                    console.log("listar cliente: " + cliente)
+                ))
+                .catch(erro => console.log(erro));
+        }
+    }
+
     alterarProfissional() {
 
     }

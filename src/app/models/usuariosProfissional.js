@@ -8,7 +8,7 @@ class UsuariosProfissional {
 
     adiciona(profissional) {
         return new Promise((resolve, reject) => {
-            const sql = `INSERT INTO usuariosProfissional (
+            const sql = `INSERT INTO usuarios_profissional (
                 nome,
                 celular,
                 telefone,
@@ -48,7 +48,7 @@ class UsuariosProfissional {
             conexao.query(
                 `
                     SELECT *
-                    FROM usuariosProfissional
+                    FROM usuarios_profissional
                     WHERE email = ?
                 `, [email],
                 (erro, usuario) => {
@@ -64,7 +64,7 @@ class UsuariosProfissional {
 
     procurarId(id) {
         return new Promise((resolve, reject) => {
-            const sql = 'SELECT * FROM usuariosProfissional WHERE id = ?'
+            const sql = 'SELECT * FROM usuarios_profissional WHERE id = ?'
 
             conexao.query(sql, [id], (erro, usuario) => {
                 if (erro) {

@@ -1,6 +1,7 @@
 const UsuariosProfissional = require('../models/usuariosProfissional');
 const conexao = require('../config/conexao');
 const { validationResult } = require('express-validator');
+const multer = require('multer');
 
 class UsuarioProfissionalController {
 
@@ -37,14 +38,17 @@ class UsuarioProfissionalController {
 
     listarProfissional() {
         return function(req, resp) {
-            const id = req.params.id;
+            console.log("listar prof: " + req.session.passport.user.idUsuario)
+
+            const id = req.session.passport.user.idUsuario;
 
             const usuariosProfissional = new UsuariosProfissional(conexao);
             usuariosProfissional.procurarId(id)
-                .then(usuario => res.marko(
-                    require('../views/perfil/cliente/perfil_profissional.marko'), {
-                        profissional: usuario,
-                    }
+                .then(profissional => resp.marko(
+                    require('../views/perfil/profissional/perfil_profissional.marko'), {
+                        profissional: profissional[0],
+                    },
+                    console.log("listar profissional: " + profissional)
                 ))
                 .catch(erro => console.log(erro));
         }

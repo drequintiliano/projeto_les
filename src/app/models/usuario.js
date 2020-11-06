@@ -13,29 +13,19 @@ class Usuario {
             const create = `CREATE VIEW viewUsuarios AS
                             SELECT distinct 
                                 id, 
-                                nome, 
-                                endereco, 
-                                redes_sociais, 
-                                celular, 
-                                telefone, 
-                                descricao, 
+                                nome,                             
                                 email, 
                                 senha, 
                                 1 as tipo 
-                            FROM usuariosProfissional
+                            FROM usuarios_profissional
                             UNION ALL
                             SELECT distinct 
                                 id, 
-                                nome, 
-                                endereco, 
-                                '-' as redes_sociais, 
-                                celular, 
-                                '-' as telefone, 
-                                '-' as descricao, 
+                                nome,                                 
                                 email, 
                                 senha, 
                                 2 as tipo 
-                            FROM usuariosCliente`
+                            FROM usuarios_cliente`
 
             const select = 'SELECT * FROM viewUsuarios WHERE email = ?'
 

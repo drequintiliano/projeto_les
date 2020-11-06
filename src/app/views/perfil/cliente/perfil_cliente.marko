@@ -38,10 +38,10 @@
                         <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="cliente_index.html">Serviços</a>
                     </li>
                     <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="about.html">Sobre</a>
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="cliente_about.html">Sobre</a>
                     </li>
                     <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="contact.html">Ajuda</a>
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="cliente_contact.html">Ajuda</a>
                     </li>
                     <!-- <li class="nav-item mx-0 mx-lg-3">
                         <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="login">Entrar</a>
@@ -50,7 +50,7 @@
             </div>
 
             <button type="button" class="btn btn-light">
-              <a  href="perfil_cliente.html">Perfil</a>
+              <a  href="perfil_cliente">Perfil</a>
             </button>
 
         </div>
@@ -84,7 +84,7 @@
                         </div>
                         <div class="col-sm-4 mr-auto py-2" align="center">
                             <div class="mt-2">
-                                <h4>Adoniran Barbosa</h4>
+                                <h4>${data.cliente.nome}</h4>
                             </div>
                         </div>
                     </div>
@@ -93,7 +93,7 @@
                             <label for="endereco" class="col-sm-2 col-form-label">Endereço</label>
                         </div>
                         <div class="col-sm-4 mr-auto py-2">
-                            <input id="endereco" class="form-control" type="text" placeholder="Rua José Santiago da Silva, 311" disabled>
+                            <input id="endereco" name="endereco" class="form-control" type="text" value="${data.cliente.endereco}" disabled>
                         </div>
                     </div>
                     <div class="row py-2">
@@ -101,23 +101,15 @@
                             <label for="email" class="col-sm-2 col-form-label">Email</label>
                         </div>
                         <div class="col-sm-4 mr-auto py-2">
-                            <input id="email" class="form-control" type="text" placeholder="jose_saramago@email.com" disabled>
+                            <input id="email" name="email" class="form-control" type="text" value="${data.cliente.email}" disabled>
                         </div>
-                    </div>
-                    <div class="row py-2">
-                        <div class="col-sm-2 ml-auto py-2">
-                            <label for="telefone" class="col-sm-2 col-form-label">Telefone</label>
-                        </div>
-                        <div class="col-sm-4 mr-auto py-2">
-                            <input id="telefone" class="form-control" type="text" placeholder="(15) 3232-2323" disabled>
-                        </div>
-                    </div>
+                    </div>                   
                     <div class="row py-2">
                         <div class="col-sm-2 ml-auto py-2">
                             <label for="celular" class="col-sm-2 col-form-label">Celular</label>
                         </div>
                         <div class="col-sm-4 mr-auto py-2">
-                            <input id="celular" class="form-control" type="text" placeholder="(15) 99880-2323" disabled>
+                            <input id="celular" name="celular" class="form-control" type="text" value="${data.cliente.celular}" disabled>
                         </div>
                     </div>
                     <div class="row py-2 mt-4 justify-content-center">
@@ -139,6 +131,11 @@
 
         </div>
     </section>
+
+    <div class="container py-5 my-5">
+        <div class="conatiner-fluid py-5 my-5">
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer text-center">

@@ -6,15 +6,18 @@ class Tabelas {
         this.criarUsuariosProfissional();
         this.criarUsuariosCliente();
         this.criarSolicitacoesProfissional();
-        this.criarServicos();
         this.criarSolicitacoesCliente();
+        this.criarServicos();
+        this.criarServicosAvaliacoes();
+        this.criarCategorias();
+        // this.insertCategorias();
         // this.criarUsuarios();
         // this.insertUsuariosProfissional();
         // this.insertUsuariosCliente();
     }
 
     criarUsuariosProfissional() {
-        const sql = 'CREATE TABLE IF NOT EXISTS usuariosProfissional' +
+        const sql = 'CREATE TABLE IF NOT EXISTS usuarios_profissional' +
             '(id int NOT NULL AUTO_INCREMENT,' +
             'nome varchar(50) NOT NULL,' +
             'celular varchar(50) NOT NULL,' +
@@ -30,15 +33,15 @@ class Tabelas {
 
         this.conexao.query(sql, (erro) => {
             if (erro) {
-                console.log('Erro ao executar create profissional: ' + erro);
+                console.log('Erro ao executar create usuarios_profissional: ' + erro);
             } else {
-                console.log('Tabela usuariosProfissional criada com sucesso')
+                console.log('Tabela usuarios_profissional criada com sucesso')
             }
         })
     }
 
     criarUsuariosCliente() {
-        const sql = 'CREATE TABLE IF NOT EXISTS usuariosCliente' +
+        const sql = 'CREATE TABLE IF NOT EXISTS usuarios_cliente' +
             '(id int NOT NULL AUTO_INCREMENT,' +
             'nome varchar(50) NOT NULL,' +
             'celular varchar(50) NOT NULL,' +
@@ -59,22 +62,55 @@ class Tabelas {
     }
 
     criarSolicitacoesProfissional() {
-        const sql = 'CREATE TABLE IF NOT EXISTS solicitacoesProfissional' +
+        const sql = 'CREATE TABLE IF NOT EXISTS solicitacoes_profissional' +
             '(id int NOT NULL AUTO_INCREMENT,' +
             'data TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,' +
-            'dataSolicitacao DATE,' +
-            'horaSolicitacao TIME,' +
+            'data_solicitacao DATE,' +
+            'hora_solicitacao TIME,' +
+            'id_profissional int,' +
+            'id_cliente int,' +
             'cliente varchar(50) NOT NULL,' +
             'endereco varchar(100) NOT NULL,' +
             'celular varchar(50) NOT NULL,' +
             'email varchar(50) NOT NULL,' +
-            'PRIMARY KEY(id))'
+            'status_id int NOT NULL,' +
+            'status_desc varchar(50) NOT NULL,' +
+            'PRIMARY KEY(id),' +
+            'FOREIGN KEY(id_profissional) REFERENCES usuarios_profissional(id),' +
+            'FOREIGN KEY(id_cliente) REFERENCES usuarios_cliente(id))'
 
         this.conexao.query(sql, (erro) => {
             if (erro) {
-                console.log('Erro ao executar create solicitações profissional: ' + erro);
+                console.log('Erro ao executar create solicitacoes_profissional: ' + erro);
             } else {
-                console.log('Tabela solicitacoesProfissional criada com sucesso')
+                console.log('Tabela solicitacoes_profissional criada com sucesso')
+            }
+        })
+    }
+
+    criarSolicitacoesCliente() {
+        const sql = 'CREATE TABLE IF NOT EXISTS solicitacoes_cliente' +
+            '(id int NOT NULL AUTO_INCREMENT,' +
+            'data TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,' +
+            'data_solicitacao DATE,' +
+            'hora_solicitacao TIME,' +
+            'id_cliente int,' +
+            'id_profissional int NOT NULL,' +
+            'profissional varchar(50) NOT NULL,' +
+            'categoria varchar(100) NOT NULL,' +
+            'celular varchar(50) NOT NULL,' +
+            'email varchar(50) NOT NULL,' +
+            'status_id int NOT NULL,' +
+            'status_desc varchar(50) NOT NULL,' +
+            'PRIMARY KEY(id),' +
+            'FOREIGN KEY(id_profissional) REFERENCES usuarios_profissional(id),' +
+            'FOREIGN KEY(id_cliente) REFERENCES usuarios_cliente(id))'
+
+        this.conexao.query(sql, (erro) => {
+            if (erro) {
+                console.log('Erro ao executar create solicitacoes_cliente: ' + erro);
+            } else {
+                console.log('Tabela solicitacoes_cliente criada com sucesso')
             }
         })
     }
@@ -84,13 +120,17 @@ class Tabelas {
             '(id int NOT NULL AUTO_INCREMENT,' +
             'data TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,' +
             'titulo varchar(50),' +
+            'id_profissional int NOT NULL,' +
+            'id_categoria int NOT NULL,' +
             'categoria varchar(50),' +
             'descricao varchar(500) NOT NULL,' +
             'qualidade  decimal(2,2) NOT NULL,' +
             'pontualidade  decimal(2,2) NOT NULL,' +
-            'execucao  decimal(2,2) NOT NULL,' +
-            'avaliacoes  int NOT NULL DEFAULT 5,' +
-            'PRIMARY KEY(id))'
+            'execucao decimal(2,2) NOT NULL,' +
+            'id_avaliacoes int,' +
+            'quantidade_avaliacoes int NOT NULL DEFAULT 0,' +
+            'PRIMARY KEY(id),' +
+            'FOREIGN KEY(id_profissional) REFERENCES usuarios_profissional(id))'
 
         this.conexao.query(sql, (erro) => {
             if (erro) {
@@ -101,26 +141,58 @@ class Tabelas {
         })
     }
 
-    criarSolicitacoesCliente() {
-        const sql = 'CREATE TABLE IF NOT EXISTS solicitacoesCliente' +
+    criarServicosAvaliacoes() {
+        const sql = 'CREATE TABLE IF NOT EXISTS servicos_avaliacoes' +
             '(id int NOT NULL AUTO_INCREMENT,' +
             'data TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,' +
-            'dataSolicitacao DATE,' +
-            'horaSolicitacao TIME,' +
-            'idProfissional int NOT NULL,' +
-            'nomeProfissional varchar(50) NOT NULL,' +
-            'categoria varchar(100) NOT NULL,' +
-            'celular varchar(50) NOT NULL,' +
-            'email varchar(50) NOT NULL,' +
-            'statusId int NOT NULL,' +
-            'statusDesc varchar(50) NOT NULL,' +
+            'id_cliente int NOT NULL,' +
+            'id_servico int NOT NULL,' +
+            'qualidade  decimal(2,2) NOT NULL,' +
+            'pontualidade  decimal(2,2) NOT NULL,' +
+            'execucao decimal(2,2) NOT NULL,' +
+            'avaliacoes int,' +
+            'PRIMARY KEY(id),' +
+            'FOREIGN KEY(id_servico) REFERENCES servicos(id),' +
+            'FOREIGN KEY(id_cliente) REFERENCES usuarios_cliente(id))'
+
+        this.conexao.query(sql, (erro) => {
+            if (erro) {
+                console.log('Erro ao executar create servicosAvaliacoes: ' + erro);
+            } else {
+                console.log('Tabela servicosAvaliacoes criada com sucesso')
+            }
+        })
+    }
+
+    criarCategorias() {
+        const sql = 'CREATE TABLE IF NOT EXISTS categorias' +
+            '(id int NOT NULL,' +
+            'descricao varchar(50) NOT NULL,' +
             'PRIMARY KEY(id))'
 
         this.conexao.query(sql, (erro) => {
             if (erro) {
-                console.log('Erro ao executar create solicitacoesCliente: ' + erro);
+                console.log('Erro ao executar create categorias: ' + erro);
             } else {
-                console.log('Tabela solicitacoesCliente criada com sucesso')
+                console.log('Tabela categortias criada com sucesso')
+            }
+        })
+    }
+
+    insertCategorias() {
+        const sql = `INSERT INTO categorias (id, descricao) VALUES
+                     (1,'Serviços Domésticos'),
+                     (2,'Assistencia Técnica'),
+                     (3,'Eventos'),
+                     (4,'Reformas'),
+                     (5,'Aulas'),
+                     (6,'Consultorias');`
+
+        this.conexao.query(sql, (erro) => {
+            if (erro) {
+                console.log('Erro ao executar insert categorias: ' + erro);
+            } else {
+                console.log('Insert categorias executado')
             }
         })
     }

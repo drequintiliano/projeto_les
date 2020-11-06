@@ -10,7 +10,7 @@ class SolicitacoesCliente {
 
     async listarTodos() {
         return new Promise((resolve, reject) => {
-            const sql = 'SELECT * FROM solicitacoesCliente ORDER BY dataSolicitacao DESC';
+            const sql = 'SELECT * FROM solicitacoes_cliente ORDER BY data_solicitacao DESC';
             conexao.query(sql, (erro, resultados) => {
                 if (erro) {
                     return reject('Não foi possivel listar solicitações');
@@ -23,7 +23,7 @@ class SolicitacoesCliente {
 
     remove(id) {
         return new Promise((resolve, reject) => {
-            const sql = 'DELETE FROM solicitacoesCliente WHERE id = ?'
+            const sql = 'DELETE FROM solicitacoes_cliente WHERE id = ?'
 
             conexao.query(sql, [id], (erro) => {
                 if (erro) {

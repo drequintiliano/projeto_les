@@ -1,5 +1,6 @@
 const passport = require("passport");
-const UsuarioProfissional = require('../models/usuariosProfissional')
+const UsuarioProfissional = require('../models/usuariosProfissional');
+const UsuarioCliente = require('../models/usuariosCliente');
 const conexao = require('../config/conexao');
 
 class Login {
@@ -29,21 +30,16 @@ class Login {
                         return next(erro);
                     }
 
-                    console.log("redirecionar para: " + user[0].tipo + " id: " + user[0].tipo);
-                    console.log("carregar user: " + JSON.stringify(user[0]));
-                    const userDados = JSON.stringify(user[0]);
-                    const parse = JSON.parse(userDados);
-                    console.log("dados...")
-                    console.log(user)
-                    console.log(userDados)
-                    console.log(parse)
-                    console.log(parse.endereco)
+                    console.log("redirecionar para: " + user[0].tipo + " user: " + user[0].id);
 
                     const tipo = user[0].tipo
                     const id = user[0].id
 
                     if (tipo == 1) {
-                        const usuarioProfissional = new UsuarioProfissional(conexao)
+                        const usuarioProfissional = new UsuarioProfissional(conexao);
+
+                        console.log('profissional logado sessao: ' + JSON.stringify(req.session.passport.user.idUsuario))
+                        console.log('profissional logado sessao: ' + JSON.stringify(req.session.passport.user))
 
                         return usuarioProfissional.procurarId(id)
                             .then(profissional => resp.marko(
@@ -53,9 +49,18 @@ class Login {
                             ))
                             .catch(erro => console.log(erro));
                     } else {
-                        return resp.redirect('/perfil_cliente', {
-                            cliente: userDados
-                        })
+                        const usuarioCliente = new UsuarioCliente(conexao);
+
+                        console.log('usuario logado sessao: ' + JSON.stringify(req.session.passport.user.idUsuario))
+                        console.log('usuario logado sessao: ' + JSON.stringify(req.session.passport.user))
+
+                        return usuarioCliente.procurarId(id)
+                            .then(cliente => resp.marko(
+                                require(__dirname + '../../views/perfil/cliente/perfil_cliente.marko'), {
+                                    cliente: cliente[0],
+                                }
+                            ))
+                            .catch(erro => console.log(erro));
                     }
                 });
             })(req, resp, next);
