@@ -10184,3 +10184,10 @@ form .row:first-child .floating-label-form-group {
     margin-right: -50%;
     transform: translate(-50%, -50%) */
 }
+
+.card-servicos:hover {
+    transition: all .2s ease-in-out;
+    opacity: 1;
+    background-color: rgba(26, 188, 156, .2);
+    border-radius: 10px;
+}
