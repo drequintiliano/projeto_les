@@ -22,15 +22,17 @@ const SolicitacoesClienteController = require('../controllers/solicitacoesClient
 const UsuarioClienteController = require('../controllers/usuarioClienteController');
 const LoginController = require('../controllers/loginController');
 const ServicosController = require('../controllers/servicosController');
+const SolicitacoesController = require('../controllers/solicitacoesController')
 const getIndex = require('../controllers/get');
 
 // Instancias
-const solicitacoesProfissionalController = new SolicitacoesProfissionalController
-const usuarioProfissionalController = new UsuarioProfissionalController
-const solicitacoesClienteController = new SolicitacoesClienteController
-const usuarioClienteController = new UsuarioClienteController
-const loginController = new LoginController
-const servicos = new ServicosController
+const solicitacoesProfissionalController = new SolicitacoesProfissionalController;
+const usuarioProfissionalController = new UsuarioProfissionalController;
+const solicitacoesClienteController = new SolicitacoesClienteController;
+const usuarioClienteController = new UsuarioClienteController;
+const loginController = new LoginController;
+const servicosController = new ServicosController;
+const solicitacoesController = new SolicitacoesController;
 
 
 /*------------------------------------------------------------ Rotas Home ------------------------------------------------------------*/
@@ -58,17 +60,22 @@ routes.post('/login', loginController.efetuaLogin());
 
 
 /*------------------------------------------------------------ Rotas Serviços ------------------------------------------------------------*/
-routes.get('/cat_servicos', servicos.listarServicosDomesticos());
+routes.get('/cat_servicos', servicosController.listarServicosDomesticos());
 
-routes.get('/cat_assistencias', servicos.listarAssistencia());
+routes.get('/cat_assistencias', servicosController.listarAssistencia());
 
-routes.get('/cat_aulas', servicos.listarAulas());
+routes.get('/cat_aulas', servicosController.listarAulas());
 
-routes.get('/cat_reformas', servicos.listarReformas());
+routes.get('/cat_reformas', servicosController.listarReformas());
 
-routes.get('/cat_eventos', servicos.listarEventos());
+routes.get('/cat_eventos', servicosController.listarEventos());
 
-routes.get('/cat_consultorias', servicos.listarConsultorias());
+routes.get('/cat_consultorias', servicosController.listarConsultorias());
+
+
+/*------------------------------------------------------------ Rotas Solicitações ------------------------------------------------------------*/
+
+routes.post('/cadastrar_solicitacao', solicitacoesController.cadastrarSolicitacao());
 
 
 /*------------------------------------------------------------ Rotas Profissional ------------------------------------------------------------*/
@@ -135,9 +142,17 @@ routes.get('/cadastrar_cliente', function(req, res) {
 routes.post('/cadastrar_cliente', UsuariosCliente.validacoes(), usuarioClienteController.cadastrarCliente());
 
 // Solicitacoes Cliente
-routes.get('/solicitacoes_cliente', solicitacoesClienteController.listaSolicitacoes());
+routes.get('/solicitacoes_cliente', solicitacoesController.listarSolicitacoesCliente());
 
 routes.delete('/solicitacoes_cliente/:id', solicitacoesClienteController.removeSolicitacao());
+
+routes.post('/cancelar_solicitacao', solicitacoesController.cancelarSolicitacaoCliente());
+
+// Serviço
+routes.post('/solicitacoes_cliente', servicosController.avaliarServico());
+
+
+
 
 
 module.exports = routes;

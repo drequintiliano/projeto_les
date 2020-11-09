@@ -5,15 +5,13 @@ class Tabelas {
 
         this.criarUsuariosProfissional();
         this.criarUsuariosCliente();
-        this.criarSolicitacoesProfissional();
-        this.criarSolicitacoesCliente();
+        this.criarSolicitacoes();
         this.criarServicos();
         this.criarServicosAvaliacoes();
         this.criarCategorias();
         // this.insertCategorias();
-        // this.criarUsuarios();
-        // this.insertUsuariosProfissional();
-        // this.insertUsuariosCliente();
+        this.criarSolicitacoesStatus();
+        // this.insertSolicitacoesStatus();
     }
 
     criarUsuariosProfissional() {
@@ -61,29 +59,27 @@ class Tabelas {
         })
     }
 
-    criarSolicitacoesProfissional() {
-        const sql = 'CREATE TABLE IF NOT EXISTS solicitacoes_profissional' +
+    criarSolicitacoes() {
+        const sql = 'CREATE TABLE IF NOT EXISTS solicitacoes' +
             '(id int NOT NULL AUTO_INCREMENT,' +
             'data TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,' +
-            'data_solicitacao DATE,' +
-            'hora_solicitacao TIME,' +
-            'id_profissional int,' +
-            'id_cliente int,' +
-            'cliente varchar(50) NOT NULL,' +
-            'endereco varchar(100) NOT NULL,' +
-            'celular varchar(50) NOT NULL,' +
-            'email varchar(50) NOT NULL,' +
-            'status_id int NOT NULL,' +
-            'status_desc varchar(50) NOT NULL,' +
+            'data_solicitacao DATE NOT NULL,' +
+            'hora_solicitacao TIME NOT NULL,' +
+            'id_profissional int NOT NULL,' +
+            'id_cliente int NOT NULL,' +
+            'id_categoria int NOT NULL,' +
+            'id_servico int NOT NULL,' +
+            'id_status int NOT NULL,' +
             'PRIMARY KEY(id),' +
             'FOREIGN KEY(id_profissional) REFERENCES usuarios_profissional(id),' +
+            'FOREIGN KEY(id_servico) REFERENCES servicos(id),' +
             'FOREIGN KEY(id_cliente) REFERENCES usuarios_cliente(id))'
 
         this.conexao.query(sql, (erro) => {
             if (erro) {
-                console.log('Erro ao executar create solicitacoes_profissional: ' + erro);
+                console.log('Erro ao executar create solicitacoes: ' + erro);
             } else {
-                console.log('Tabela solicitacoes_profissional criada com sucesso')
+                console.log('Tabela solicitacoes criada com sucesso')
             }
         })
     }
@@ -151,10 +147,9 @@ class Tabelas {
             'qualidade  decimal(5,2) NOT NULL,' +
             'pontualidade  decimal(5,2) NOT NULL,' +
             'execucao decimal(5,2) NOT NULL,' +
-            'avaliacoes int,' +
-            'PRIMARY KEY(id),' +
-            'FOREIGN KEY(id_servico) REFERENCES servicos(id),' +
-            'FOREIGN KEY(id_cliente) REFERENCES usuarios_cliente(id))'
+            'avaliacoes int NOT NULL,' +
+            'comentarios varchar(200),' +
+            'PRIMARY KEY(id))'
 
         this.conexao.query(sql, (erro) => {
             if (erro) {
@@ -180,6 +175,21 @@ class Tabelas {
         })
     }
 
+    criarSolicitacoesStatus() {
+        const sql = 'CREATE TABLE IF NOT EXISTS solicitacoes_status' +
+            '(id int NOT NULL,' +
+            'descricao varchar(50) NOT NULL,' +
+            'PRIMARY KEY(id))'
+
+        this.conexao.query(sql, (erro) => {
+            if (erro) {
+                console.log('Erro ao executar create solicitacoes_status: ' + erro);
+            } else {
+                console.log('Tabela solicitacoes_status criada com sucesso')
+            }
+        })
+    }
+
     insertCategorias() {
         const sql = `INSERT INTO categorias (id, descricao) VALUES
                      (1,'Serviços Domésticos'),
@@ -188,6 +198,22 @@ class Tabelas {
                      (4,'Reformas'),
                      (5,'Aulas'),
                      (6,'Consultorias');`
+
+        this.conexao.query(sql, (erro) => {
+            if (erro) {
+                console.log('Erro ao executar insert categorias: ' + erro);
+            } else {
+                console.log('Insert categorias executado')
+            }
+        })
+    }
+
+    insertSolicitacoesStatus() {
+        const sql = `INSERT INTO solicitacoes_status (id, descricao) VALUES
+                     (1,'Aguardando Confirmação'),
+                     (2,'Confirmado'),
+                     (3,'Cancelado'),
+                     (4,'Avaliado');`
 
         this.conexao.query(sql, (erro) => {
             if (erro) {

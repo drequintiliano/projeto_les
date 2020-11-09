@@ -43,9 +43,11 @@
                     <li class="nav-item mx-0 mx-lg-1">
                         <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="contact.html">Ajuda</a>
                     </li>
-                    <li class="nav-item mx-0 mx-lg-3">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="login">Entrar</a>
-                    </li>
+                    <if(data.usuarioSessao == undefined)>
+                        <li class="nav-item mx-0 mx-lg-3">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="login">Entrar</a>
+                        </li>
+                    </if>
                 </ul>
             </div>
 
@@ -69,6 +71,15 @@
             <br>
             <br>
 
+            <div if(data.sucesso)>
+                <div id="alertSucesso" class="alert alert-success alert-dismissible fade show" role="alert">
+                    Solicitação feita com sucesso!
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>    
+            </div>
+
             <!-- Portfolio Grid Items -->
             <div class="row mx-auto">
 
@@ -85,7 +96,7 @@
                                     <h4>${servico.titulo}</h4>
                                 </div>
                                 <div class="row text-left">
-                                <p>${servico.descricao} - <a href="#">${servico.quantidade_avaliacoes}</a></p>
+                                <p>${servico.descricao} - Avaliações: <a href="#">${servico.quantidade_avaliacoes}</a></p>
                                 </div>
                                 <div class="row ">
                                 <p><strong>${servico.celular}</strong> <br> <strong>${servico.email}</strong></p>
@@ -96,38 +107,72 @@
 
                      <!-- Modal -->
                     <div class="modal fade" id="modal_${servico.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Solicitar - ${servico.titulo}</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Profissional: ${servico.nome}</p>
-                                    <div class="form-group">
-                                        <label for="date">Selecione uma data: </label>
-                                        <input id="date" class="form-control" type="date">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="hora">Digite uma hora: </label>
-                                        <input id="hora" class="form-control" type="time">
-                                    </div>
-                                </div>
+                        
+                        <if(data.usuarioSessao != undefined)>
+                            <div class="modal-dialog">
+                                <div class="modal-content">
 
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                    <button type="button" class="btn btn-primary">Confirmar</button>
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Solicitar - ${servico.titulo}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <p>Profissional: ${servico.nome} <br>Pontualidade: ${servico.pontualidade} | Qualidade: ${servico.qualidade} | Execução: ${servico.execucao} <br>Quantidade de avaliações: ${servico.quantidade_avaliacoes} <br><br> Avaliações dos clientes:<br>${servico.comentarios} </p> 
+                                        <form action="/cadastrar_solicitacao" method="post" id="cadastrarSolicitacao">                                        
+                                            <div class="form-group">
+                                                <label for="data">Selecione uma data: </label>
+                                                <input id="data" name="data" class="form-control" type="date" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="hora">Digite uma hora: </label>
+                                                <input id="hora" name="hora" class="form-control" type="time" required>
+                                            </div>
+                                            <div class="form-group" style="display: none;">
+                                                <input id="idProfissional" name="idProfissional" value="${servico.id_profissional}" class="form-control">
+                                                <input id="idCategoria" name="idCategoria" value="${servico.id_categoria}" class="form-control">
+                                                <input id="idCliente" name="idCliente" value="${data.usuarioSessao.idUsuario}" class="form-control">
+                                                <input id="idServico" name="idServico" value="${servico.id}" class="form-control">
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                <button type="submit" class="btn btn-primary">Confirmar</button>
+                                            </div>
+                                        </form>                                    
+                                    </div>  
+
                                 </div>
                             </div>
-                        </div>
+                        </if>                            
+                        <else>
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Solicitar - ${servico.titulo}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <p>Profissional: ${servico.nome} <br>Pontualidade: ${servico.pontualidade} | Qualidade: ${servico.qualidade} | Execução: ${servico.execucao} <br>Quantidade de avaliações: ${servico.quantidade_avaliacoes} <br><br> Avaliações dos clientes:<br>${servico.comentarios} </p> 
+                                        <br>                                      
+                                        <h5>Para fazer uma solicitação de serviço é preciso estar conectado.<br><br> Faça agora o <a href="/login">Login</a></h5>                                                                      
+                                        </div>  
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </else>
                     </div>
                 </for>                                 
-
             </div>
             <!-- /.row -->
-
         </div>
     </section>
 

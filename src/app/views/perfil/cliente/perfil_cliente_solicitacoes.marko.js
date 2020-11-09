@@ -18,7 +18,7 @@ function render(input, out, __component, component, state) {
 
   out.w("<html lang=pt-br><head><meta charset=utf-8><meta name=viewport content=\"width=device-width, initial-scale=1, shrink-to-fit=no\"><meta name=description content><meta name=author content><title>Perfil Cliente - Solicitações</title><link href=vendor/fontawesome-free/css/all.min.css rel=stylesheet type=text/css><link href=https://fonts.googleapis.com/css?family=Montserrat:400,700 rel=stylesheet type=text/css><link href=https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic rel=stylesheet type=text/css><link href=css/freelancer.min.css rel=stylesheet></head><body id=page-top><nav class=\"navbar navbar-expand-lg text-uppercase fixed-top\" id=mainNav style=\"background-color: #707070\"><div class=container><button class=\"navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded\" type=button data-toggle=collapse data-target=#navbarResponsive aria-controls=navbarResponsive aria-expanded=false aria-label=\"Toggle navigation\"><i class=\"fas fa-bars\"></i></button><a class=\"navbar-brand js-scroll-trigger\" href=#page-top>Portal Serv</a><div class=\"collapse navbar-collapse\" id=navbarResponsive><ul class=navbar-nav><li class=\"nav-item mx-0 mx-lg-1\"><a class=\"nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger\" href=cliente_index.html>Serviços</a></li><li class=\"nav-item mx-0 mx-lg-1\"><a class=\"nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger\" href=cliente_about.html>Sobre</a></li><li class=\"nav-item mx-0 mx-lg-1\"><a class=\"nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger\" href=cliente_contact.html>Ajuda</a></li></ul></div><button type=button class=\"btn btn-light\"><a href=perfil_cliente>Perfil</a></button></div></nav><section class=page-section id=contact><div class=container><br><br><h2 class=\"page-section-heading text-center mb-0\">Perfil Cliente</h2><br><br><nav aria-label=breadcrumb><ol class=breadcrumb><li class=breadcrumb-item><a href=perfil_cliente>Perfil</a></li><li class=\"breadcrumb-item active\" aria-current=page>Solicitações</li></ol></nav><div class=container-fluid><div class=container><div class=\"row py-2\"><div class=\"col-12 col-sm-10 mx-auto py-2\"><div class=table-responsive-sm>");
 
-  if (data.solicitacao != undefined) {
+  if (data.solicitacoes) {
     out.w("<table id=solicitacoes class=\"table table-hover\"><thead><tr><th scope=col-2>Data e Hora</th><th scope=col-1>Profissional</th><th scope=col-1>Categoria</th><th scope=col-2>Celular</th><th scope=col-2>E-mail</th><th scope=col-2>Status</th><th scope=col-2>Ação</th></tr></thead><tbody>");
 
     var $for$0 = 0;
@@ -29,9 +29,11 @@ function render(input, out, __component, component, state) {
       out.w("<tr" +
         marko_attr("id", "solicitacao_" + (solicitacao.id == null ? "" : solicitacao.id)) +
         "> <td>" +
+        marko_escapeXml(solicitacao.data_solicitacao) +
+        " - " +
         marko_escapeXml(solicitacao.hora_solicitacao) +
         "</td><td>" +
-        marko_escapeXml(solicitacao.nome_profissional) +
+        marko_escapeXml(solicitacao.nome) +
         "</td><td>" +
         marko_escapeXml(solicitacao.categoria) +
         "</td><td>" +
@@ -39,10 +41,10 @@ function render(input, out, __component, component, state) {
         "</td><td>" +
         marko_escapeXml(solicitacao.email) +
         "</td><td>" +
-        marko_escapeXml(solicitacao.status_desc) +
+        marko_escapeXml(solicitacao.status) +
         "</td> ");
 
-      if (solicitacao.statusId == 1) {
+      if (solicitacao.id_status == 1) {
         out.w("<td><div class=row><div class=\"col-6 col-sm-4\"><button type=button class=\"btn btn-danger btn-sm\" data-toggle=modal" +
           marko_attr("data-target", "#cancelar_" + (solicitacao.id == null ? "" : solicitacao.id)) +
           ">Cancelar</button> </div> </div> </td> ");
@@ -50,13 +52,13 @@ function render(input, out, __component, component, state) {
 
       out.w(" ");
 
-      if (solicitacao.statusId == 2) {
+      if (solicitacao.id_status == 2) {
         out.w("<td><div class=row><div class=\"col-6 col-sm-4\"><button type=button class=\"btn btn-success btn-sm\" data-toggle=modal" +
           marko_attr("data-target", "#avaliar_" + (solicitacao.id == null ? "" : solicitacao.id)) +
           ">Avaliar</button> </div> </div> </td> ");
       }
 
-      if (solicitacao.statusId == 3) {
+      if ((solicitacao.id_status == 3) || (solicitacao.id_status == 4)) {
         out.w("<td></td>");
       }
 
@@ -65,16 +67,22 @@ function render(input, out, __component, component, state) {
         " tabindex=-1 aria-labelledby=exampleModalLabel aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><h5 class=modal-title id=exampleModalLabel>Cancelar Solicitação</h5><button type=button class=close data-dismiss=modal aria-label=Close><span aria-hidden=true>&times;</span></button></div><div class=modal-body><p>Deseja realmente cancelar a solicitação de " +
         marko_escapeXml(solicitacao.categoria) +
         " de " +
-        marko_escapeXml(solicitacao.nomeProfissional) +
-        "?</p></div><div class=modal-footer><button type=button class=\"btn btn-secondary\" data-dismiss=modal>Não</button><button type=button class=\"btn btn-primary\" data-target=#" +
-        marko_attr("data-ref", solicitacao.id) +
-        " data-type=cancelar data-dismiss=modal>Sim</button></div></div></div></div> <div class=\"modal fade\"" +
+        marko_escapeXml(solicitacao.nome) +
+        "?</p></div><form action=/cancelar_solicitacao method=post id=cancelarSolicitacao><div class=modal-footer><div class=form-group style=\"display: none;\"><input id=idCliente name=idCliente" +
+        marko_attr("value", data.usuarioSessao.idUsuario) +
+        "><input id=idServico name=idServico" +
+        marko_attr("value", solicitacao.id_servico) +
+        "></div><button type=button class=\"btn btn-secondary\" data-dismiss=modal>Não</button><button type=submit class=\"btn btn-primary\">Sim</button></div></form> </div></div></div> <div class=\"modal fade\"" +
         marko_attr("id", "avaliar_" + (solicitacao.id == null ? "" : solicitacao.id)) +
         " tabindex=-1 aria-labelledby=exampleModalLabel aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><h5 class=modal-title id=exampleModalLabel>Avaliar Serviços - " +
         marko_escapeXml(solicitacao.categoria) +
         " de " +
-        marko_escapeXml(solicitacao.nomeProfissional) +
-        "</h5><button type=button class=close data-dismiss=modal aria-label=Close><span aria-hidden=true>&times;</span></button></div><div class=modal-body><p>Insira uma nota para os requisitos abaixo (de 1 a 5):</p><div class=\"input-group mb-3\"><div class=input-group-prepend><span class=input-group-text id=pontualidade>Pontualidade</span></div><input type=number class=form-control placeholder=Pontualidade aria-label=pontualidade aria-describedby=pontualidade max=5 min=1 required></div><div class=\"input-group mb-3\"><div class=input-group-prepend><span class=input-group-text id=qualidade>Qualidade</span></div><input type=number class=form-control placeholder=Qualidade aria-label=qualidade aria-describedby=qualidade max=5 min=1 required></div><div class=\"input-group mb-3\"><div class=input-group-prepend><span class=input-group-text id=execucao>Execução</span></div><input type=number class=form-control placeholder=Execução aria-label=execucao aria-describedby=execucao max=5 min=1 required></div></div><div class=modal-footer><button type=button class=\"btn btn-secondary\" data-dismiss=modal>Cancelar</button><button type=button class=\"btn btn-primary\" data-type=avaliar data-dismiss=modal>Confirmar</button></div></div></div></div></div></tr>");
+        marko_escapeXml(solicitacao.nome) +
+        "</h5><button type=button class=close data-dismiss=modal aria-label=Close><span aria-hidden=true>&times;</span></button></div><div class=modal-body><p>Insira uma nota para os requisitos abaixo (de 1 a 5):</p><form action=/solicitacoes_cliente method=post id=avaliarServico><div class=\"input-group mb-3\"><div class=input-group-prepend><span class=input-group-text id=pontualidade>Pontualidade</span></div><input type=number id=pontualidade name=pontualidade class=form-control aria-label=pontualidade aria-describedby=pontualidade max=5 min=1 required></div><div class=\"input-group mb-3\"><div class=input-group-prepend><span class=input-group-text id=qualidade>Qualidade</span></div><input type=number id=qualidade name=qualidade class=form-control aria-label=qualidade aria-describedby=qualidade max=5 min=1 required></div><div class=\"input-group mb-3\"><div class=input-group-prepend><span class=input-group-text id=execucao>Execução</span></div><input type=number id=execucao name=execucao class=form-control aria-label=execucao aria-describedby=execucao max=5 min=1 required></div><div class=form-group><p>Comentários sobre o serviço:</p><textarea class=form-control name=comentarios id=comentarios type=text></textarea></div><div class=form-group style=\"display: none;\"><input id=idCliente name=idCliente" +
+        marko_attr("value", data.usuarioSessao.idUsuario) +
+        "><input id=idServico name=idServico" +
+        marko_attr("value", solicitacao.id_servico) +
+        "></div><div class=modal-footer><button type=button class=\"btn btn-secondary\" data-dismiss=modal>Cancelar</button><button type=submit class=\"btn btn-primary\" data-type=avaliar>Confirmar</button></div></form></div> </div></div></div></div></tr>");
     });
 
     out.w(" </tbody> </table>");
@@ -86,7 +94,7 @@ function render(input, out, __component, component, state) {
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "129");
+  await_reorderer_tag({}, out, __component, "140");
 
   _preferred_script_location_tag({}, out);
 

@@ -78,7 +78,7 @@
                     <div class="row py-2">
                         <div class="col-12 col-sm-10 mx-auto py-2">
                             <div class="table-responsive-sm">
-                                <if(data.solicitacao != undefined)>
+                                <if(data.solicitacoes)>
                                     <table id="solicitacoes" class="table table-hover">
                                         <thead>
                                             <tr>
@@ -93,14 +93,14 @@
                                         </thead>
                                         <tbody>
                                             <tr id="solicitacao_${solicitacao.id}" for(solicitacao in data.solicitacoes)>  
-                                                <td>${solicitacao.hora_solicitacao}</td>
-                                                <td>${solicitacao.nome_profissional}</td>
+                                                <td>${solicitacao.data_solicitacao} - ${solicitacao.hora_solicitacao}</td>
+                                                <td>${solicitacao.nome}</td>
                                                 <td>${solicitacao.categoria}</td>
                                                 <td>${solicitacao.celular}</td>
                                                 <td>${solicitacao.email}</td>
-                                                <td>${solicitacao.status_desc}</td>   
+                                                <td>${solicitacao.status}</td>   
 
-                                                <if(solicitacao.statusId == 1)>
+                                                <if(solicitacao.id_status == 1)>
                                                     <td>
                                                         <div class="row">
                                                             <div class="col-6 col-sm-4">
@@ -110,7 +110,7 @@
                                                     </td>   
                                                 </if>    
 
-                                                <if(solicitacao.statusId == 2)>
+                                                <if(solicitacao.id_status == 2)>
                                                 <td>
                                                     <div class="row">
                                                         <div class="col-6 col-sm-4">
@@ -120,7 +120,7 @@
                                                 </td>  
                                                 </if>
 
-                                                <if(solicitacao.statusId == 3)>
+                                                <if(solicitacao.id_status == 3 || solicitacao.id_status == 4)>
                                                     <td></td>
                                                 </if>
                                             
@@ -136,12 +136,21 @@
                                                                     </button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <p>Deseja realmente cancelar a solicitação de ${solicitacao.categoria} de ${solicitacao.nomeProfissional}?</p>
+                                                                    <p>Deseja realmente cancelar a solicitação de ${solicitacao.categoria} de ${solicitacao.nome}?</p>
                                                                 </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
-                                                                    <button type="button" class="btn btn-primary" data-target="#" data-ref="${solicitacao.id}" data-type="cancelar" data-dismiss="modal">Sim</button>
-                                                                </div>
+
+                                                                <form action="/cancelar_solicitacao" method="post" id="cancelarSolicitacao">
+                                                                    <div class="modal-footer">
+                                                                        <div class="form-group" style="display: none;">
+                                                                            <input id="idCliente" name="idCliente" value="${data.usuarioSessao.idUsuario}">
+                                                                            <input id="idServico" name="idServico" value="${solicitacao.id_servico}">
+                                                                        </div>
+
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                                                                        <!-- <button type="button" class="btn btn-primary" data-target="#" data-ref="${solicitacao.id}" data-type="cancelar" data-dismiss="modal">Sim</button> -->
+                                                                        <button type="submit" class="btn btn-primary">Sim</button>
+                                                                    </div>
+                                                                </form>                                                               
                                                             </div>
                                                         </div>
                                                     </div>  
@@ -151,37 +160,48 @@
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLabel">Avaliar Serviços - ${solicitacao.categoria} de ${solicitacao.nomeProfissional}</h5>
+                                                                    <h5 class="modal-title" id="exampleModalLabel">Avaliar Serviços - ${solicitacao.categoria} de ${solicitacao.nome}</h5>
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                     </button>
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <p>Insira uma nota para os requisitos abaixo (de 1 a 5):</p>
-                                                                    <div class="input-group mb-3">
-                                                                        <div class="input-group-prepend">
-                                                                        <span class="input-group-text" id="pontualidade">Pontualidade</span>
+                                                                    <form action="/solicitacoes_cliente" method="post" id="avaliarServico">
+                                                                        <div class="input-group mb-3">
+                                                                            <div class="input-group-prepend">
+                                                                            <span class="input-group-text" id="pontualidade">Pontualidade</span>
+                                                                            </div>
+                                                                            <input type="number" id="pontualidade" name="pontualidade" class="form-control" aria-label="pontualidade" aria-describedby="pontualidade" max="5" min="1" required>
                                                                         </div>
-                                                                        <input type="number" class="form-control" placeholder="Pontualidade" aria-label="pontualidade" aria-describedby="pontualidade" max="5" min="1" required>
-                                                                    </div>
-                                                                    <div class="input-group mb-3">
-                                                                        <div class="input-group-prepend">
-                                                                        <span class="input-group-text" id="qualidade">Qualidade</span>
+                                                                        <div class="input-group mb-3">
+                                                                            <div class="input-group-prepend">
+                                                                            <span class="input-group-text" id="qualidade">Qualidade</span>
+                                                                            </div>
+                                                                            <input type="number" id="qualidade" name="qualidade" class="form-control" aria-label="qualidade" aria-describedby="qualidade" max="5" min="1" required>
                                                                         </div>
-                                                                        <input type="number" class="form-control" placeholder="Qualidade" aria-label="qualidade" aria-describedby="qualidade" max="5" min="1" required>
-                                                                    </div>
-                                                                    <div class="input-group mb-3">
-                                                                        <div class="input-group-prepend">
-                                                                        <span class="input-group-text" id="execucao">Execução</span>
+                                                                        <div class="input-group mb-3">
+                                                                            <div class="input-group-prepend">
+                                                                            <span class="input-group-text" id="execucao">Execução</span>
+                                                                            </div>
+                                                                            <input type="number" id="execucao" name="execucao" class="form-control" aria-label="execucao" aria-describedby="execucao" max="5" min="1" required>
                                                                         </div>
-                                                                        <input type="number" class="form-control" placeholder="Execução" aria-label="execucao" aria-describedby="execucao" max="5" min="1" required>
-                                                                    </div>
+                                                                        <div class="form-group">
+                                                                            <p>Comentários sobre o serviço:</p>
+                                                                            <textarea class="form-control" name="comentarios" id="comentarios" type="text"></textarea>
+                                                                        </div>
+                                                                        <div class="form-group" style="display: none;">
+                                                                            <input id="idCliente" name="idCliente" value="${data.usuarioSessao.idUsuario}">
+                                                                            <input id="idServico" name="idServico" value="${solicitacao.id_servico}">
+                                                                        </div>
 
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                                    <button type="button" class="btn btn-primary" data-type="avaliar" data-dismiss="modal">Confirmar</button>
-                                                                </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                                            <button type="submit" class="btn btn-primary" data-type="avaliar">Confirmar</button>
+                                                                        </div>
+                                                                    </form>
+                                                                   
+                                                                </div>                                                                
                                                             </div>
                                                         </div>
                                                     </div>
