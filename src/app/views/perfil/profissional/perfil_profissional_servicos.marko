@@ -79,34 +79,103 @@
                 <div class="container">
                     <div class="row py-2">
                         <div class="col-sm-4 py-2">
-                            <div class="card" style="width: 18rem;">
-                                <img src="img/servicos/reformas/hidraulica.png" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Projetos Hidraulicos</h5>
-                                    <p class="card-text">Descrição: Faço projetos de reformas de rede hidraulica de todo seu encamento, agende seu orçamento sem compromisso.</p>
-                                </div>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Categoria: Reformas</li>
-                                    <li class="list-group-item">Qualidade: 5.0</li>
-                                    <li class="list-group-item">Pontualidade: 4.5</li>
-                                    <li class="list-group-item">Execução: 4.5</li>
-                                </ul>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <button type="button" class="btn btn-light" data-toggle="modal" data-target="#alterarServico">
-                                                <a>Alterar</a>
-                                              </button>
-                                        </div>
-                                        <div class="col-4">
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#excluirServico">
-                                                <a>Excluir</a>
-                                              </button>
+
+                            <for|servico| of=data.servicos>
+                                <div id="servico_${servico.id}" class="card" style="width: 18rem;">
+                                    <img src="img/categorias/servicos/${servico.caminho_img}.jpg" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${servico.titulo}</h5>
+                                        <p class="card-text">${servico.descricao}</p>
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">Categoria: ${servico.categoria_desc}</li>
+                                        <li class="list-group-item">Qualidade: ${servico.qualidade} <br>Pontualidade: ${servico.pontualidade} <br>Execucao: ${servico.execucao}</li>
+                                        <!-- <li class="list-group-item"></li>
+                                        <li class="list-group-item"></li> -->
+                                        <li class="list-group-item">Avaliações: ${servico.quantidade_avaliacoes} <br>Comentarios: ${servico.comentarios}</li>
+                                    </ul>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <button type="button" class="btn btn-light" data-toggle="modal" data-target="#modalAlterar_${servico.id}">
+                                                    <a>Alterar</a>
+                                                </button>
+                                            </div>
+                                            <div class="col-4">
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalExcluir_${servico.id}">
+                                                    <a>Excluir</a>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>                    
+
+
+                                <div id="modais">
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="modalAlterar_${servico.id}"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Alterar ${servico.titulo}</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form>
+                                                        <div class="form-group">
+                                                            <label for="exampleFormControlFile1">Envie uma foto:</label>
+                                                            <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="exampleFormControlSelect1">Selecione uma categoria:</label>
+                                                            <select class="form-control" id="exampleFormControlSelect1">
+                                                            <option>Serviços Domésticos</option>
+                                                            <option>Assistencia Técnica</option>
+                                                            <option>Eventos</option>
+                                                            <option>Reformas</option>
+                                                            <option>Aulas</option>
+                                                            <option>Consultorias</option>
+                                                        </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="exampleFormControlTextarea1">Escreva uma descrição:</label>
+                                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                    <button type="submit" class="btn btn-primary">Salvar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal fade" id="modalExcluir_${servico.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Excluir Serviço</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Deseja realmente excluir ${servico.titulo}?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                                                    <button type="submit" class="btn btn-primary">Sim</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </for>
+
+                        </div>
                     </div>
                     <div class="row py-2">
                         <div class="col-sm-4">
@@ -117,10 +186,10 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </section>
 
-    <!-- Modal -->
     <div class="modal fade" id="adicionarServico" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -128,10 +197,10 @@
                     <h5 class="modal-title" id="exampleModalLabel">Adicionar Serviço</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
-          </button>
+        </button>
                 </div>
                 <div class="modal-body">
-                    <form action="/perfil_profissional_servicos" method="post" enctype="multipart/form-data">   
+                    <form action="/perfil_profissional_servicos" method="post" enctype="multipart/form-data">
                         <!-- <div class="form-group">
                             <label for="titulo">Titulo Serviço:</label>
                             <input type="text" name="titulo" class="form-control" id="titulo">
@@ -144,12 +213,12 @@
                             <label for="exampleFormControlSelect1">Selecione uma categoria:</label>
                             <select class="form-control" id="exampleFormControlSelect1">
                             <option>Serviços Domésticos</option>
-                            <option>Assistencia Técnica</option>     
+                            <option>Assistencia Técnica</option>
                             <option>Eventos</option>
                             <option>Reformas</option>
                             <option>Aulas</option>
                             <option>Consultorias</option>
-                          </select>
+                        </select>
                         </div>
                         <div class="form-group">
                             <label for="descricao_servico">Escreva uma descrição:</label>
@@ -160,66 +229,6 @@
                             <button type="submit" class="btn btn-primary">Salvar</button>
                         </div>
                     </form>
-                </div>               
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="alterarServico" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Alterar Serviço</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="exampleFormControlFile1">Envie uma foto:</label>
-                            <input type="file" class="form-control-file" id="exampleFormControlFile1">
-                        </div>                       
-                        <div class="form-group">
-                            <label for="exampleFormControlSelect1">Selecione uma categoria:</label>
-                            <select class="form-control" id="exampleFormControlSelect1">
-                            <option>Serviços Domésticos</option>
-                            <option>Assistencia Técnica</option>     
-                            <option>Eventos</option>
-                            <option>Reformas</option>
-                            <option>Aulas</option>
-                            <option>Consultorias</option>
-                          </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Escreva uma descrição:</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Salvar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="excluirServico" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Excluir Serviço</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-                </div>
-                <div class="modal-body">
-                    <p>Deseja realmente excluir o serviço selecionado?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
-                    <button type="button" class="btn btn-primary">Sim</button>
                 </div>
             </div>
         </div>

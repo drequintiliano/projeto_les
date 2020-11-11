@@ -72,6 +72,8 @@ function render(input, out, __component, component, state) {
         marko_attr("value", data.usuarioSessao.idUsuario) +
         "><input id=idServico name=idServico" +
         marko_attr("value", solicitacao.id_servico) +
+        "><input id=idSolicitacao name=idSolicitacao" +
+        marko_attr("value", solicitacao.id) +
         "></div><button type=button class=\"btn btn-secondary\" data-dismiss=modal>Não</button><button type=submit class=\"btn btn-primary\">Sim</button></div></form> </div></div></div> <div class=\"modal fade\"" +
         marko_attr("id", "avaliar_" + (solicitacao.id == null ? "" : solicitacao.id)) +
         " tabindex=-1 aria-labelledby=exampleModalLabel aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><h5 class=modal-title id=exampleModalLabel>Avaliar Serviços - " +
@@ -82,6 +84,8 @@ function render(input, out, __component, component, state) {
         marko_attr("value", data.usuarioSessao.idUsuario) +
         "><input id=idServico name=idServico" +
         marko_attr("value", solicitacao.id_servico) +
+        "><input id=idSolicitacao name=idSolicitacao" +
+        marko_attr("value", solicitacao.id) +
         "></div><div class=modal-footer><button type=button class=\"btn btn-secondary\" data-dismiss=modal>Cancelar</button><button type=submit class=\"btn btn-primary\" data-type=avaliar>Confirmar</button></div></form></div> </div></div></div></div></tr>");
     });
 
@@ -94,7 +98,7 @@ function render(input, out, __component, component, state) {
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "140");
+  await_reorderer_tag({}, out, __component, "142");
 
   _preferred_script_location_tag({}, out);
 

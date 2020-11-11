@@ -66,9 +66,11 @@ function render(input, out, __component, component, state) {
         marko_escapeXml(servico.qualidade) +
         " | Execução: " +
         marko_escapeXml(servico.execucao) +
-        " <br>Quantidade de avaliações do serviço: " +
+        " <br>Quantidade de avaliações: " +
         marko_escapeXml(servico.quantidade_avaliacoes) +
-        "</p><form action=/cadastrar_solicitacao method=post id=cadastrarSolicitacao> <div class=form-group><label for=data>Selecione uma data: </label><input id=data name=data class=form-control type=date required></div><div class=form-group><label for=hora>Digite uma hora: </label><input id=hora name=hora class=form-control type=time required></div><div class=form-group style=\"display: none;\"><input id=idProfissional name=idProfissional" +
+        " <br><br> Avaliações dos clientes:<br>" +
+        marko_escapeXml(servico.comentarios) +
+        " </p> <form action=/cadastrar_solicitacao method=post id=cadastrarSolicitacao> <div class=form-group><label for=data>Selecione uma data: </label><input id=data name=data class=form-control type=date required></div><div class=form-group><label for=hora>Digite uma hora: </label><input id=hora name=hora class=form-control type=time required></div><div class=form-group style=\"display: none;\"><input id=idProfissional name=idProfissional" +
         marko_attr("value", servico.id_profissional) +
         " class=form-control><input id=idCategoria name=idCategoria" +
         marko_attr("value", servico.id_categoria) +
@@ -102,7 +104,7 @@ function render(input, out, __component, component, state) {
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "139");
+  await_reorderer_tag({}, out, __component, "142");
 
   _preferred_script_location_tag({}, out);
 

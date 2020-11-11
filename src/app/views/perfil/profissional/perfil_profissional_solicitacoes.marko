@@ -79,40 +79,113 @@
             <div class="container-fluid">
                 <div class="container">
                     <div class="row py-2">
-                        <div class="col-12 col-sm-10 mx-auto py-2">
+                        <div class="col-xl-12 col-12 mx-auto py-2">
                             <div class="table-responsive-sm">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col-2">Data e Hora</th>
-                                            <th scope="col-1">Cliente</th>
-                                            <th scope="col-1">Endereço</th>
-                                            <th scope="col-3">Celular</th>
-                                            <th scope="col-3">E-mail</th>
-                                            <th scope="col-2">Confirmar</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr for (solicitacao in data.solicitacoes)>
-                                            <!-- <td>${solicitacao.dataSolicitacao} + ${solicitacao.horaSolicitacao}</td> -->
-                                            <td>${solicitacao.horaSolicitacao}</td>
-                                            <td>${solicitacao.cliente}</td>
-                                            <td>${solicitacao.endereco}</td>
-                                            <td>${solicitacao.celular}</td>
-                                            <td>${solicitacao.email}</td>
-                                            <td>
-                                                <div class="row">
-                                                    <div class="col-6 col-sm-4">
-                                                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#confirmarSolicitacao">Sim</button>
-                                                    </div>
-                                                    <div class="col-6 col-sm-4">
-                                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#cancelarSolicitacao">Não</button>
+                                <if(data.solicitacoes)>
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col-xl-1 col-1">Data e Hora</th>
+                                                <th scope="col-xl-1 col-1">Cliente - Serviço</th>
+                                                <th scope="col-xl-4 col-4">Endereço</th>
+                                                <th scope="col-xl-1 col-1">Celular</th>
+                                                <th scope="col-xl-1 col-1">E-mail</th>
+                                                <th scope="col-xl-1 col-1">Status</th>
+                                                <th scope="col-xl-3 col-3">Confirmar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr id="solicitacao_${solicitacao.id}" for(solicitacao in data.solicitacoes)>  
+                                                <td>${solicitacao.data_solicitacao} - ${solicitacao.hora_solicitacao}</td>
+                                                <td>${solicitacao.nome} - ${solicitacao.titulo}</td>
+                                                <td>${solicitacao.endereco}</td>
+                                                <td>${solicitacao.celular}</td>
+                                                <td>${solicitacao.email}</td>
+                                                <td>${solicitacao.status}</td>   
+                                                
+                                                <if(solicitacao.id_status == 1)>
+                                                    <td>
+                                                        <div class="row">
+                                                            <div class="col-6 col-sm-4">
+                                                                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalConfirmar_${solicitacao.id}">V</button>
+                                                            </div>
+                                                            <div class="col-6 col-sm-4">
+                                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalCancelar_${solicitacao.id}">X</button>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </if>
+                                                <else>
+                                                    <td></td>
+                                                </else>
+                                               
+
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="modalCancelar_${solicitacao.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Cancelar Solicitação</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>Deseja realmente cancelar a solicitação ${solicitacao.titulo} do cliente ${solicitacao.nome}?</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                                                                <button type="submit" class="btn btn-primary">Sim</button>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+
+                                                <div class="modal fade" id="modalConfirmar_${solicitacao.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Confirmar Solicitação</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">  
+                                                                <form action="/confirmar_solicitacao" method="post" id="confirmarSolicitacao">
+                                                                    <p>Deseja realmente confirmar a solicitação ${solicitacao.titulo} do cliente ${solicitacao.nome}?</p>
+
+                                                                    <div class="form-group" style="display: none;">
+                                                                        <input id="idProfissional" name="idProfissional" value="${data.usuarioSessao.idUsuario}">
+                                                                        <input id="idServico" name="idServico" value="${solicitacao.id_servico}">
+                                                                        <input id="idSolicitacao" name="idSolicitacao" value="${solicitacao.id}">
+                                                                    </div>
+
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                                                                        <button type="submit" class="btn btn-primary">Sim</button>
+                                                                    </div>
+                                                                </form>                                                                
+                                                            </div>                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </tr>
+                                        </tbody>
+                                    </table>                                     
+                                </if>
+                                <else>
+                                    <div class="container py-5 my-5">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <h2>Não existem solicitações.</h2>
+                                            </div>
+                                            <!-- <div class="col-sm">
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </else>    
                             </div>
                         </div>
                     </div>
@@ -120,47 +193,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Modal -->
-    <div class="modal fade" id="cancelarSolicitacao" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Cancelar Solicitação</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-                </div>
-                <div class="modal-body">
-                    <p>Deseja realmente cancelar a solicitação selecionada?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
-                    <button type="button" class="btn btn-primary">Sim</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="confirmarSolicitacao" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Confirmar Solicitação</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-                </div>
-                <div class="modal-body">
-                    <p>Deseja realmente confirmar a solicitação selecionada?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
-                    <button type="button" class="btn btn-primary">Sim</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="container py-5 my-5">
         <div class="conatiner-fluid py-5 my-5">

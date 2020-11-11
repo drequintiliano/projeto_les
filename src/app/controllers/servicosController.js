@@ -10,18 +10,19 @@ class ServicosController {
             const form = req.body;
             const idCliente = req.body.idCliente;
             const idServico = req.body.idServico;
+            const idSolicitacao = req.body.idSolicitacao;
             const usuarioSessao = req.session.passport == undefined ? undefined : req.session.passport.user;
             const solicitacoes = new Solicitacoes(conexao);
             const servicos = new Servicos(conexao);
 
-            console.log("cliente id: " + idCliente + " servico id: " + idServico);
+            console.log("cliente id: " + idCliente + " solicitacao id: " + idSolicitacao);
             console.log("formulario: " + JSON.stringify(form));
 
             servicos.atualizarQuantidadeAvaliacoes(idServico);
 
             servicos.cadastrarServicosAvaliacoes(form)
                 .then(
-                    solicitacoes.atualizarStatus(idServico)
+                    solicitacoes.atualizarStatus(idSolicitacao)
                     .then(
                         solicitacoes.listarSolicitacoesCliente(idCliente)
                         .then(solicitacoes => resp.marko(
@@ -56,7 +57,7 @@ class ServicosController {
             const usuarioSessao = req.session.passport == undefined ? undefined : req.session.passport.user
 
             const servicos = new Servicos(conexao);
-            servicos.listarServico(1)
+            servicos.listarCategoriaServico(1)
                 .then(servicos => res.marko(
                     require('../views/categorias/cat_servicos.marko'), {
                         servicos: servicos,
@@ -71,7 +72,7 @@ class ServicosController {
         return function(req, res) {
 
             const servicos = new Servicos(conexao);
-            servicos.listarServico(2)
+            servicos.listarCategoriaServico(2)
                 .then(servicos => res.marko(
                     require('../views/categorias/cat_assitencias.marko'), {
                         servicos: servicos,
@@ -85,7 +86,7 @@ class ServicosController {
         return function(req, res) {
 
             const servicos = new Servicos(conexao);
-            servicos.listarServico(3)
+            servicos.listarCategoriaServico(3)
                 .then(servicos => res.marko(
                     require('../views/categorias/cat_eventos.marko'), {
                         servicos: servicos,
@@ -99,7 +100,7 @@ class ServicosController {
         return function(req, res) {
 
             const servicos = new Servicos(conexao);
-            servicos.listarServico(4)
+            servicos.listarCategoriaServico(4)
                 .then(servicos => res.marko(
                     require('../views/categorias/cat_reformas.marko'), {
                         servicos: servicos,
@@ -113,7 +114,7 @@ class ServicosController {
         return function(req, res) {
 
             const servicos = new Servicos(conexao);
-            servicos.listarServico(5)
+            servicos.listarCategoriaServico(5)
                 .then(servicos => res.marko(
                     require('../views/categorias/cat_aulas.marko'), {
                         servicos: servicos,
@@ -127,10 +128,29 @@ class ServicosController {
         return function(req, res) {
 
             const servicos = new Servicos(conexao);
-            servicos.listarServico(6)
+            servicos.listarCategoriaServico(6)
                 .then(servicos => res.marko(
                     require('../views/categorias/cat_consultorias.marko'), {
                         servicos: servicos,
+                    }
+                ))
+                .catch(erro => console.log(erro));
+        }
+    }
+
+    listarServicosProfissional() {
+        return function(req, res) {
+            const usuarioSessao = req.session.passport == undefined ? undefined : req.session.passport.user;
+            const id = usuarioSessao.idUsuario;
+
+            console.log("id profissional sessao: " + id);
+
+            const servicos = new Servicos(conexao);
+            servicos.listarServicoDoProfissional(id)
+                .then(servicos => res.marko(
+                    require('../views/perfil/profissional/perfil_profissional_servicos.marko'), {
+                        servicos: servicos,
+                        usuarioSessao
                     }
                 ))
                 .catch(erro => console.log(erro));

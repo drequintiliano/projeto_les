@@ -101,22 +101,18 @@ routes.get('/cadastrar_profissional', function(req, res) {
 routes.post('/cadastrar_profissional', UsuariosProfissional.validacoes(), usuarioProfissionalController.cadastrarProfissional());
 
 // Serviços Profissional
-routes.get('/perfil_profissional_servicos', function(req, res) {
-    res.marko(require(__dirname + '../../views/perfil/profissional/perfil_profissional_servicos.marko'));
-});
+routes.get('/perfil_profissional_servicos', servicosController.listarServicosProfissional());
 
 routes.post('/perfil_profissional_servicos', upload.single('img'), function(req, res) {
     res.marko(require(__dirname + '../../views/perfil/profissional/perfil_profissional_servicos.marko'));
 });
 
 // Solicitacoes Profissional
-routes.get('/perfil_profissional_solicitacoes.html', function(req, res) {
-    res.sendFile(path.resolve(__dirname + '../../views/perfil/profissional/perfil_profissional_solicitacoes.html'));
-});
-
-routes.get('/solicitacoes_profissional', solicitacoesProfissionalController.listaSolicitacoes());
+routes.get('/solicitacoes_profissional', solicitacoesController.listarSolicitacoesProfissional());
 
 routes.delete('/solicitacoes_profissional/:id', solicitacoesProfissionalController.removeSolicitacao());
+
+routes.post('/confirmar_solicitacao', solicitacoesController.confirmarSolicitacao());
 
 
 /*------------------------------------------------------------ Rotas Cliente ------------------------------------------------------------*/

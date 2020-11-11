@@ -74,18 +74,24 @@ class Solicitacoes {
         return new Promise((resolve, reject) => {
             const sql = `SELECT 
                             A.id,
+                            A.id_servico,
+                            F.titulo,
                             A.data_solicitacao,
                             A.hora_solicitacao,
                             C.nome,
                             D.descricao,
                             C.celular,
                             C.email,
-                            E.descricao
+                            C.endereco,
+                            E.descricao,
+                            A.id_status,
+                            E.descricao as status
                         FROM solicitacoes A 
                         JOIN usuarios_profissional B ON B.id = A.id_profissional
                         JOIN usuarios_cliente C ON C.id = A.id_cliente
                         JOIN categorias D ON D.id = A.id_categoria
                         JOIN solicitacoes_status E ON E.id = A.id_status
+                        JOIN servicos F on F.id = A.id_servico
                         WHERE A.id_profissional = ?
                         ORDER BY A.data_solicitacao`
 
@@ -103,13 +109,31 @@ class Solicitacoes {
         return new Promise((resolve, reject) => {
             const sql = `UPDATE solicitacoes
                         SET id_status = 4
-                        WHERE id_servico =?`
+                        WHERE id =?`
 
             conexao.query(sql, id, (erro, resultados) => {
                 if (erro) {
                     console.log(erro);
                     return reject('Não foi possivel avaliar servico' + erro);
                 } else {
+                    return resolve();
+                }
+            })
+        })
+    }
+
+    confirmarSolicitacao(id) {
+        return new Promise((resolve, reject) => {
+            const sql = `UPDATE solicitacoes
+                        SET id_status = 2
+                        WHERE id =?`
+
+            conexao.query(sql, id, (erro, resultados) => {
+                if (erro) {
+                    console.log(erro);
+                    return reject('Não foi possivel avaliar servico' + erro);
+                } else {
+                    console.log("confirmar solicitacao: " + JSON.stringify(resultados));
                     return resolve();
                 }
             })
@@ -127,6 +151,7 @@ class Solicitacoes {
                     console.log(erro);
                     return reject('Não foi possivel avaliar servico' + erro);
                 } else {
+                    console.log("cancelar solicitacao: " + JSON.stringify(resultados));
                     return resolve();
                 }
             })

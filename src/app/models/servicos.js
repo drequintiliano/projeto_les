@@ -15,6 +15,7 @@ class Servicos {
                         SELECT 
                             A.id,
                             A.id_categoria,
+                            C.descricao as categoria_desc,
                             A.id_profissional,                            
                             A.titulo,
                             A.descricao,
@@ -29,6 +30,7 @@ class Servicos {
                             A.descricao as comentarios   
                         FROM servicos A
                         JOIN usuarios_profissional B ON B.id = A.id_profissional
+                        JOIN categorias C ON C.id = A.id_categoria
                         ORDER BY quantidade_avaliacoes DESC`;
 
         const create2 = `CREATE TABLE tmp_servicos_avaliacoes AS
@@ -66,14 +68,34 @@ class Servicos {
         conexao.query(update2);
     }
 
-    async listarServico(id) {
+    async listarCategoriaServico(id) {
         return new Promise((resolve, reject) => {
 
             this.totalizarServicos();
 
             const sql = `SELECT * FROM  tmp_servicos
-            WHERE id_categoria = ?
-            ORDER BY quantidade_avaliacoes DESC`;
+                        WHERE id_categoria = ?
+                        ORDER BY quantidade_avaliacoes DESC`;
+
+            conexao.query(sql, [id], (erro, resultados) => {
+                if (erro) {
+                    return reject('Não foi possivel listar serviços' + erro);
+                } else {
+                    console.log("listar serviços: " + JSON.stringify(resultados))
+                    return resolve(resultados);
+                }
+            })
+        });
+    }
+
+    listarServicoDoProfissional(id) {
+        return new Promise((resolve, reject) => {
+
+            this.totalizarServicos();
+
+            const sql = `SELECT * FROM  tmp_servicos
+                        WHERE id_profissional = ?
+                        ORDER BY quantidade_avaliacoes DESC`;
 
             conexao.query(sql, [id], (erro, resultados) => {
                 if (erro) {
