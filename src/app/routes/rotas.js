@@ -1,12 +1,16 @@
 const routes = require('express').Router();
 const path = require('path');
+
+// Upload Foto
 const multer = require('multer');
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
-        cb(null, __dirname + '../../public/img/categorias')
+        cb(null, __dirname + `../../public/img`)
     },
     filename: function(req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now())
+        console.log("nome caminho_igm: " + JSON.stringify(req.body.caminho_img))
+
+        cb(null, req.body.caminho_img + '.jpg')
     }
 });
 const upload = multer({ storage: storage });
@@ -103,9 +107,7 @@ routes.post('/cadastrar_profissional', UsuariosProfissional.validacoes(), usuari
 // Serviços Profissional
 routes.get('/perfil_profissional_servicos', servicosController.listarServicosProfissional());
 
-routes.post('/perfil_profissional_servicos', upload.single('img'), function(req, res) {
-    res.marko(require(__dirname + '../../views/perfil/profissional/perfil_profissional_servicos.marko'));
-});
+routes.post('/perfil_profissional_servicos', upload.single('img'), servicosController.adicionarServicoProfissional());
 
 // Solicitacoes Profissional
 routes.get('/solicitacoes_profissional', solicitacoesController.listarSolicitacoesProfissional());

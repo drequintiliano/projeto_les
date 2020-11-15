@@ -51,9 +51,16 @@
                 </ul>
             </div>
 
-            <button type="button" class="btn btn-light">
-              <a  href="cadastro.html">Cadastrar</a>
-            </button>
+            <if(data.usuarioSessao == undefined)>
+                <button type="button" class="btn btn-light">
+                <a  href="cadastro.html">Cadastrar</a>
+                </button>
+            </if>                
+            <else>
+                <button type="button" class="btn btn-light">
+                    <a  href="perfil_profissional">Perfil</a>
+                </button>
+            </else>
 
         </div>
     </nav>
@@ -88,7 +95,7 @@
                         <div class="row py-3 card-servicos">
                             <div class="col-xl-4 col-lg-4 col-md-12 col-10 mx-auto my-2" align="center">
                                 <div>
-                                    <img class="foto-perfil" src="img/categorias/servicos/${servico.caminho_img}.jpg" alt="">
+                                    <img class="foto-perfil" src="img/${servico.caminho_img}.jpg" alt="">
                                 </div>
                             </div>
                             <div class="col-xl-8 col-lg-6 col-md-10 col-10 mx-auto">
@@ -106,8 +113,7 @@
                     </div>
 
                      <!-- Modal -->
-                    <div class="modal fade" id="modal_${servico.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        
+                    <div class="modal fade" id="modal_${servico.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">                        
                         <if(data.usuarioSessao != undefined)>
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -120,7 +126,14 @@
                                     </div>
 
                                     <div class="modal-body">
-                                        <p>Profissional: ${servico.nome} <br>Pontualidade: ${servico.pontualidade} | Qualidade: ${servico.qualidade} | Execução: ${servico.execucao} <br>Quantidade de avaliações: ${servico.quantidade_avaliacoes} <br><br> Avaliações dos clientes:<br>${servico.comentarios} </p> 
+                                        <div style="background-color: rgba(26, 188, 156, .2); border-radius: 10px;" class="text-center">
+                                            <p>Profissional: <strong>${servico.nome}</strong><br>
+                                                Pontualidade: <strong>${servico.pontualidade}</strong> | 
+                                                Qualidade: <strong>${servico.qualidade}</strong> | 
+                                                Execução: <strong>${servico.execucao}</strong><br>
+                                                Quantidade de avaliações: <strong>${servico.quantidade_avaliacoes}</strong> </p> 
+                                        </div>   
+                                        Avaliações dos clientes:<br>${servico.comentarios} <br><br>                                                          
                                         <form action="/cadastrar_solicitacao" method="post" id="cadastrarSolicitacao">                                        
                                             <div class="form-group">
                                                 <label for="data">Selecione uma data: </label>
@@ -159,10 +172,16 @@
                                     </div>
 
                                     <div class="modal-body">
-                                        <p>Profissional: ${servico.nome} <br>Pontualidade: ${servico.pontualidade} | Qualidade: ${servico.qualidade} | Execução: ${servico.execucao} <br>Quantidade de avaliações: ${servico.quantidade_avaliacoes} <br><br> Avaliações dos clientes:<br>${servico.comentarios} </p> 
-                                        <br>                                      
+                                        <div style="background-color: rgba(26, 188, 156, .2); border-radius: 10px;" class="text-center">
+                                            <p>Profissional: <strong>${servico.nome}</strong><br>
+                                                Pontualidade: <strong>${servico.pontualidade}</strong> | 
+                                                Qualidade: <strong>${servico.qualidade}</strong> | 
+                                                Execução: <strong>${servico.execucao}</strong><br>
+                                                Quantidade de avaliações: <strong>${servico.quantidade_avaliacoes}</strong> </p> 
+                                        </div>   
+                                        Avaliações dos clientes:<br>${servico.comentarios} <br><br>                              
                                         <h5>Para fazer uma solicitação de serviço é preciso estar conectado.<br><br> Faça agora o <a href="/login">Login</a></h5>                                                                      
-                                        </div>  
+                                    </div>  
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                                     </div>
@@ -170,6 +189,7 @@
                             </div>
                         </else>
                     </div>
+
                 </for>                                 
             </div>
             <!-- /.row -->

@@ -32,6 +32,8 @@ module.exports = (app) => {
     ));
 
     passport.serializeUser((user, done) => {
+        const data = Date.now();
+
         const usuarioSessao = {
             idUsuario: user[0].id,
             nome: user[0].nome,

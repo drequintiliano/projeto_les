@@ -8,7 +8,7 @@ class Login {
     efetuaLogin() {
         return function(req, resp, next) {
 
-            // Lógia de login
+            // Lógica de login
             const passport = req.passport
             passport.authenticate('local', (erro, user, info) => {
                 if (info) {

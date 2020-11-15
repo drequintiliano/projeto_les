@@ -156,6 +156,30 @@ class ServicosController {
                 .catch(erro => console.log(erro));
         }
     }
+
+    adicionarServicoProfissional() {
+        return function(req, res) {
+            const form = req.body;
+            const usuarioSessao = req.session.passport == undefined ? undefined : req.session.passport.user;
+            const id = usuarioSessao.idUsuario;
+
+            console.log("id profissional sessao: " + id);
+            console.log("inserir servico dados form: " + JSON.stringify(form));
+
+            const servicos = new Servicos(conexao);
+            servicos.cadastrarServicos(form)
+                .then(
+                    servicos.listarServicoDoProfissional(id)
+                    .then(servicos => res.marko(
+                        require('../views/perfil/profissional/perfil_profissional_servicos.marko'), {
+                            servicos: servicos,
+                            usuarioSessao
+                        }
+                    ))
+                    .catch(erro => console.log(erro))
+                ).catch(erro => console.log(erro));
+        }
+    }
 }
 
 module.exports = ServicosController;

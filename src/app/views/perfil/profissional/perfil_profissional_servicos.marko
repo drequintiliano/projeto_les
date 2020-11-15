@@ -42,10 +42,7 @@
                     </li>
                     <li class="nav-item mx-0 mx-lg-1">
                         <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="profissional_contact.html">Ajuda</a>
-                    </li>
-                    <!-- <li class="nav-item mx-0 mx-lg-3">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="login">Entrar</a>
-                    </li> -->
+                    </li>                   
                 </ul>
             </div>
 
@@ -78,11 +75,11 @@
             <div class="container-fluid">
                 <div class="container">
                     <div class="row py-2">
-                        <div class="col-sm-4 py-2">
 
-                            <for|servico| of=data.servicos>
-                                <div id="servico_${servico.id}" class="card" style="width: 18rem;">
-                                    <img src="img/categorias/servicos/${servico.caminho_img}.jpg" class="card-img-top" alt="...">
+                        <for|servico| of=data.servicos>
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 py-2">
+                                <div id="servico_${servico.id}" class="card">
+                                    <img src="img/${servico.caminho_img}.jpg" class="card-img-top" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title">${servico.titulo}</h5>
                                         <p class="card-text">${servico.descricao}</p>
@@ -131,12 +128,12 @@
                                                         <div class="form-group">
                                                             <label for="exampleFormControlSelect1">Selecione uma categoria:</label>
                                                             <select class="form-control" id="exampleFormControlSelect1">
-                                                            <option>Serviços Domésticos</option>
-                                                            <option>Assistencia Técnica</option>
-                                                            <option>Eventos</option>
-                                                            <option>Reformas</option>
-                                                            <option>Aulas</option>
-                                                            <option>Consultorias</option>
+                                                            <option value="">Serviços Domésticos</option>
+                                                            <option value="">Assistencia Técnica</option>
+                                                            <option value="">Eventos</option>
+                                                            <option value="">Reformas</option>
+                                                            <option value="">Aulas</option>
+                                                            <option value="">Consultorias</option>
                                                         </select>
                                                         </div>
                                                         <div class="form-group">
@@ -173,9 +170,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            </for>
+                            </div>
+                        </for>
 
-                        </div>
                     </div>
                     <div class="row py-2">
                         <div class="col-sm-4">
@@ -201,29 +198,34 @@
                 </div>
                 <div class="modal-body">
                     <form action="/perfil_profissional_servicos" method="post" enctype="multipart/form-data">
-                        <!-- <div class="form-group">
+                        <div class="form-group">
                             <label for="titulo">Titulo Serviço:</label>
                             <input type="text" name="titulo" class="form-control" id="titulo">
-                        </div>                      -->
+                        </div>                                            
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Selecione uma categoria:</label>
+                            <select class="form-control" id="categoria" name="categoria">
+                            <option value="1">Serviços Domésticos</option>
+                            <option value="2">Assistencia Técnica</option>
+                            <option value="3">Eventos</option>
+                            <option value="4">Reformas</option>
+                            <option value="5">Aulas</option>
+                            <option value="6">Consultorias</option>
+                        </select> 
+                        </div>
+                        <div class="form-group">
+                            <label for="descricao">Escreva uma descrição:</label>
+                            <textarea class="form-control" id="descricao" name="descricao" rows="3"></textarea>
+                        </div> 
+
+                        <div class="form-group" style="display: none;">
+                            <input id="idProfissional" name="idProfissional" value="${data.usuarioSessao.idUsuario}">                           
+                            <input id="caminho_img" name="caminho_img" value= `${data.usuarioSessao.idUsuario}-${data.usuarioSessao.email}-${Date.now()}`>
+                        </div>
                         <div class="form-group">
                             <label for="img">Envie uma foto:</label>
                             <input type="file" name="img" class="form-control-file" id="img">
                         </div>
-                        <!-- <div class="form-group">
-                            <label for="exampleFormControlSelect1">Selecione uma categoria:</label>
-                            <select class="form-control" id="exampleFormControlSelect1">
-                            <option>Serviços Domésticos</option>
-                            <option>Assistencia Técnica</option>
-                            <option>Eventos</option>
-                            <option>Reformas</option>
-                            <option>Aulas</option>
-                            <option>Consultorias</option>
-                        </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="descricao_servico">Escreva uma descrição:</label>
-                            <textarea class="form-control" id="descricao_servico" name="descricao_servico" rows="3"></textarea>
-                        </div> -->
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                             <button type="submit" class="btn btn-primary">Salvar</button>

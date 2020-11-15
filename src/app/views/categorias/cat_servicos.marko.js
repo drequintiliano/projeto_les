@@ -22,7 +22,15 @@ function render(input, out, __component, component, state) {
     out.w("<li class=\"nav-item mx-0 mx-lg-3\"><a class=\"nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger\" href=login>Entrar</a></li>");
   }
 
-  out.w("</ul></div><button type=button class=\"btn btn-light\"><a href=cadastro.html>Cadastrar</a></button></div></nav><section class=\"page-section portfolio\" id=portfolio><div class=container><br><br><br><h2 class=\"page-section-heading text-center mb-0\">Serviços Domésticos</h2><br><br><br>");
+  out.w("</ul></div>");
+
+  if (data.usuarioSessao == undefined) {
+    out.w("<button type=button class=\"btn btn-light\"><a href=cadastro.html>Cadastrar</a></button>");
+  } else {
+    out.w("<button type=button class=\"btn btn-light\"><a href=perfil_profissional>Perfil</a></button>");
+  }
+
+  out.w("</div></nav><section class=\"page-section portfolio\" id=portfolio><div class=container><br><br><br><h2 class=\"page-section-heading text-center mb-0\">Serviços Domésticos</h2><br><br><br>");
 
   if (data.sucesso) {
     out.w("<div><div id=alertSucesso class=\"alert alert-success alert-dismissible fade show\" role=alert>Solicitação feita com sucesso! <button type=button class=close data-dismiss=alert aria-label=Close><span aria-hidden=true>&times;</span></button></div> </div>");
@@ -40,7 +48,7 @@ function render(input, out, __component, component, state) {
       " class=\"col-xl-6 col-lg-6 col-md-6 col-12 my-2\" data-toggle=modal" +
       marko_attr("data-target", "#modal_" + (servico.id == null ? "" : servico.id)) +
       "><div class=\"row py-3 card-servicos\"><div class=\"col-xl-4 col-lg-4 col-md-12 col-10 mx-auto my-2\" align=center><div><img class=foto-perfil" +
-      marko_attr("src", ("img/categorias/servicos/" + (servico.caminho_img == null ? "" : servico.caminho_img)) + ".jpg") +
+      marko_attr("src", ("img/" + (servico.caminho_img == null ? "" : servico.caminho_img)) + ".jpg") +
       " alt></div></div><div class=\"col-xl-8 col-lg-6 col-md-10 col-10 mx-auto\"><div class=row><h4>" +
       marko_escapeXml(servico.titulo) +
       "</h4></div><div class=\"row text-left\"><p>" +
@@ -53,24 +61,24 @@ function render(input, out, __component, component, state) {
       marko_escapeXml(servico.email) +
       "</strong></p></div></div></div></div><div class=\"modal fade\"" +
       marko_attr("id", "modal_" + (servico.id == null ? "" : servico.id)) +
-      " tabindex=-1 aria-labelledby=exampleModalLabel aria-hidden=true>");
+      " tabindex=-1 aria-labelledby=exampleModalLabel aria-hidden=true> ");
 
     if (data.usuarioSessao != undefined) {
       out.w("<div class=modal-dialog><div class=modal-content><div class=modal-header><h5 class=modal-title id=exampleModalLabel>Solicitar - " +
         marko_escapeXml(servico.titulo) +
-        "</h5><button type=button class=close data-dismiss=modal aria-label=Close><span aria-hidden=true>&times;</span></button></div><div class=modal-body><p>Profissional: " +
+        "</h5><button type=button class=close data-dismiss=modal aria-label=Close><span aria-hidden=true>&times;</span></button></div><div class=modal-body><div style=\"background-color: rgba(26, 188, 156, .2); border-radius: 10px;\" class=text-center><p>Profissional: <strong>" +
         marko_escapeXml(servico.nome) +
-        " <br>Pontualidade: " +
+        "</strong><br> Pontualidade: <strong>" +
         marko_escapeXml(servico.pontualidade) +
-        " | Qualidade: " +
+        "</strong> | Qualidade: <strong>" +
         marko_escapeXml(servico.qualidade) +
-        " | Execução: " +
+        "</strong> | Execução: <strong>" +
         marko_escapeXml(servico.execucao) +
-        " <br>Quantidade de avaliações: " +
+        "</strong><br> Quantidade de avaliações: <strong>" +
         marko_escapeXml(servico.quantidade_avaliacoes) +
-        " <br><br> Avaliações dos clientes:<br>" +
+        "</strong> </p> </div> Avaliações dos clientes:<br>" +
         marko_escapeXml(servico.comentarios) +
-        " </p> <form action=/cadastrar_solicitacao method=post id=cadastrarSolicitacao> <div class=form-group><label for=data>Selecione uma data: </label><input id=data name=data class=form-control type=date required></div><div class=form-group><label for=hora>Digite uma hora: </label><input id=hora name=hora class=form-control type=time required></div><div class=form-group style=\"display: none;\"><input id=idProfissional name=idProfissional" +
+        " <br><br> <form action=/cadastrar_solicitacao method=post id=cadastrarSolicitacao> <div class=form-group><label for=data>Selecione uma data: </label><input id=data name=data class=form-control type=date required></div><div class=form-group><label for=hora>Digite uma hora: </label><input id=hora name=hora class=form-control type=time required></div><div class=form-group style=\"display: none;\"><input id=idProfissional name=idProfissional" +
         marko_attr("value", servico.id_profissional) +
         " class=form-control><input id=idCategoria name=idCategoria" +
         marko_attr("value", servico.id_categoria) +
@@ -82,19 +90,19 @@ function render(input, out, __component, component, state) {
     } else {
       out.w("<div class=modal-dialog><div class=modal-content><div class=modal-header><h5 class=modal-title id=exampleModalLabel>Solicitar - " +
         marko_escapeXml(servico.titulo) +
-        "</h5><button type=button class=close data-dismiss=modal aria-label=Close><span aria-hidden=true>&times;</span></button></div><div class=modal-body><p>Profissional: " +
+        "</h5><button type=button class=close data-dismiss=modal aria-label=Close><span aria-hidden=true>&times;</span></button></div><div class=modal-body><div style=\"background-color: rgba(26, 188, 156, .2); border-radius: 10px;\" class=text-center><p>Profissional: <strong>" +
         marko_escapeXml(servico.nome) +
-        " <br>Pontualidade: " +
+        "</strong><br> Pontualidade: <strong>" +
         marko_escapeXml(servico.pontualidade) +
-        " | Qualidade: " +
+        "</strong> | Qualidade: <strong>" +
         marko_escapeXml(servico.qualidade) +
-        " | Execução: " +
+        "</strong> | Execução: <strong>" +
         marko_escapeXml(servico.execucao) +
-        " <br>Quantidade de avaliações: " +
+        "</strong><br> Quantidade de avaliações: <strong>" +
         marko_escapeXml(servico.quantidade_avaliacoes) +
-        " <br><br> Avaliações dos clientes:<br>" +
+        "</strong> </p> </div> Avaliações dos clientes:<br>" +
         marko_escapeXml(servico.comentarios) +
-        " </p> <br> <h5>Para fazer uma solicitação de serviço é preciso estar conectado.<br><br> Faça agora o <a href=/login>Login</a></h5> </div> <div class=modal-footer><button type=button class=\"btn btn-secondary\" data-dismiss=modal>Fechar</button></div></div></div>");
+        " <br><br> <h5>Para fazer uma solicitação de serviço é preciso estar conectado.<br><br> Faça agora o <a href=/login>Login</a></h5> </div> <div class=modal-footer><button type=button class=\"btn btn-secondary\" data-dismiss=modal>Fechar</button></div></div></div>");
     }
 
     out.w("</div>");
@@ -104,7 +112,7 @@ function render(input, out, __component, component, state) {
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "142");
+  await_reorderer_tag({}, out, __component, "155");
 
   _preferred_script_location_tag({}, out);
 

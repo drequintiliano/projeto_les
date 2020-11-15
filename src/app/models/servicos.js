@@ -108,6 +108,43 @@ class Servicos {
         });
     }
 
+    cadastrarServicos(servico) {
+        return new Promise((resolve, reject) => {
+            const sql = `INSERT INTO servicos (                   
+                    titulo,
+                    caminho_img,
+                    id_profissional,
+                    id_categoria,
+                    descricao,
+                    qualidade,
+                    pontualidade,
+                    execucao,
+                    quantidade_avaliacoes                
+                ) VALUES (?,?,?,?,?,?,?,?,?)`;
+
+            const array = [
+                servico.titulo,
+                servico.caminho_img,
+                servico.idProfissional,
+                servico.categoria,
+                servico.descricao,
+                5,
+                5,
+                5,
+                0
+            ];
+
+            conexao.query(sql, array, (erro, resultados) => {
+                if (erro) {
+                    console.log(erro);
+                    return reject('Não foi possivel inserir servico' + erro);
+                } else {
+                    return resolve();
+                }
+            })
+        })
+    }
+
     cadastrarServicosAvaliacoes(servico) {
         return new Promise((resolve, reject) => {
             const sql = `INSERT INTO servicos_avaliacoes (                   
