@@ -38,8 +38,8 @@ class UsuarioProfissionalController {
 
     listarProfissional() {
         return function(req, resp) {
+            const usuarioSessao = req.session.passport == undefined ? undefined : req.session.passport.user;
             console.log("listar prof: " + req.session.passport.user.idUsuario)
-
             const id = req.session.passport.user.idUsuario;
 
             const usuariosProfissional = new UsuariosProfissional(conexao);
@@ -47,6 +47,7 @@ class UsuarioProfissionalController {
                 .then(profissional => resp.marko(
                     require('../views/perfil/profissional/perfil_profissional.marko'), {
                         profissional: profissional[0],
+                        usuarioSessao: usuarioSessao
                     },
                     console.log("listar profissional: " + profissional)
                 ))
@@ -54,8 +55,25 @@ class UsuarioProfissionalController {
         }
     }
 
-    alterarProfissional() {
+    editarProfissional() {
+        return function(req, resp) {
+            const usuariosProfissional = new UsuariosProfissional(conexao);
+            const usuarioSessao = req.session.passport == undefined ? undefined : req.session.passport.user;
+            console.log("listar prof: " + req.session.passport.user.idUsuario);
+            const form = req.body;
+            const id = req.session.passport.user.idUsuario;
 
+            usuariosProfissional.editar(form);
+
+            usuariosProfissional.procurarId(id)
+                .then(profissional => resp.marko(
+                    require('../views/perfil/profissional/perfil_profissional.marko'), {
+                        profissional: profissional[0],
+                        usuarioSessao: usuarioSessao
+                    },
+                ))
+                .catch(erro => console.log(erro));
+        }
     }
 }
 

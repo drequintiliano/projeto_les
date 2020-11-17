@@ -108,6 +108,8 @@ routes.get('/cadastrar_profissional', function(req, res) {
 
 routes.post('/cadastrar_profissional', UsuariosProfissional.validacoes(), usuarioProfissionalController.cadastrarProfissional());
 
+routes.put('/editar_profissional', usuarioProfissionalController.editarProfissional());
+
 // Serviços Profissional
 routes.get('/perfil_profissional_servicos', servicosController.listarServicosProfissional());
 
@@ -148,6 +150,8 @@ routes.get('/cadastrar_cliente', function(req, res) {
 });
 
 routes.post('/cadastrar_cliente', UsuariosCliente.validacoes(), usuarioClienteController.cadastrarCliente());
+
+routes.put('/editar_cliente', usuarioClienteController.editarCliente());
 
 // Solicitacoes Cliente
 routes.get('/solicitacoes_cliente', solicitacoesController.listarSolicitacoesCliente());

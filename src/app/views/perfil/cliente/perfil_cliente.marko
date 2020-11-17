@@ -98,6 +98,14 @@
                     </div>
                     <div class="row py-2">
                         <div class="col-sm-2 ml-auto py-2">
+                            <label for="cidade" class="col-sm-2 col-form-label">Cidade</label>
+                        </div>
+                        <div class="col-sm-4 mr-auto py-2">
+                            <input id="cidade" name="cidade" class="form-control" type="text" value="${data.cliente.cidade}" disabled>
+                        </div>
+                    </div>
+                    <div class="row py-2">
+                        <div class="col-sm-2 ml-auto py-2">
                             <label for="email" class="col-sm-2 col-form-label">Email</label>
                         </div>
                         <div class="col-sm-4 mr-auto py-2">
@@ -114,8 +122,8 @@
                     </div>
                     <div class="row py-2 mt-4 justify-content-center">
                         <div class="col-sm-2">
-                            <button type="button" class="btn btn-light">
-                                <a  href="#">Alterar</a>
+                            <button type="button" class="btn btn-light" data-toggle="modal" data-target="#modalAlterar">
+                                <a>Alterar</a>
                               </button>
                         </div>
                         <br>
@@ -131,6 +139,49 @@
 
         </div>
     </section>
+
+    <div class="modal fade" id="modalAlterar"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Alterar Informações</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/editar_cliente" method="POST">   
+                        <input type="hidden" name="_method" value="PUT">  
+
+                        <div class="form-group">                            
+                            <label for="nome" class="col-sm-2 col-form-label">Nome</label>                        
+                            <input id="nome" name="nome" class="form-control" type="text" value="${data.cliente.nome}" required="required">                           
+                        </div>                        
+                        <div class="form-group">                            
+                            <label for="endereco" class="col-sm-2 col-form-label">Endereço</label>                                                        
+                            <input id="endereco" name="endereco" class="form-control" type="text" value="${data.cliente.endereco}" required="required">                            
+                        </div>   
+                        <div class="form-group">                            
+                            <label for="cidade" class="col-sm-2 col-form-label">Cidade</label>                                                        
+                            <input id="cidade" name="cidade" class="form-control" type="text" value="${data.cliente.cidade}" required="required">                            
+                        </div>                                          
+                        <div class="form-group">                            
+                            <label for="celular" class="col-sm-2 col-form-label">Celular</label>                                                        
+                            <input id="celular" name="celular" class="form-control" type="text" value="${data.cliente.celular}" required="required">                            
+                        </div>                          
+                        <div class="form-group" style="display: none;">
+                            <input id="idCliente" name="idCliente" value="${data.cliente.id}">
+                        </div>                                            
+                        
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </form>
+                </div>                                               
+            </div>
+        </div>
+    </div>
 
     <div class="container py-5 my-5">
         <div class="conatiner-fluid py-5 my-5">

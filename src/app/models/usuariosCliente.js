@@ -37,6 +37,34 @@ class UsuariosCliente {
         })
     }
 
+    editar(cliente) {
+        return new Promise((resolve, reject) => {
+            const sql = `UPDATE usuarios_cliente SET                   
+                    nome = ?,
+                    endereco = ?,
+                    cidade = ?,
+                    celular = ?
+                    WHERE id = ?`;
+
+            const array = [
+                cliente.nome,
+                cliente.endereco,
+                cliente.cidade,
+                cliente.celular,
+                cliente.idCliente
+            ];
+
+            conexao.query(sql, array, (erro, resultados) => {
+                if (erro) {
+                    console.log(erro);
+                    return reject('Não foi possivel editar usuarios_profissional' + erro);
+                } else {
+                    return resolve();
+                }
+            })
+        })
+    }
+
     procurarId(id) {
         return new Promise((resolve, reject) => {
             const sql = 'SELECT * FROM usuarios_cliente WHERE id = ?'

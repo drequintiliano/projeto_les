@@ -37,15 +37,16 @@ class UsuarioClienteController {
 
     listarCliente() {
         return function(req, resp) {
-            console.log("listar prof: " + req.session.passport.user.idUsuario)
-
+            const usuariosCliente = new UsuariosCliente(conexao);
+            console.log("listar prof: " + req.session.passport.user.idUsuario);
+            const usuarioSessao = req.session.passport == undefined ? undefined : req.session.passport.user;
             const id = req.session.passport.user.idUsuario;
 
-            const usuariosCliente = new UsuariosCliente(conexao);
             usuariosCliente.procurarId(id)
                 .then(cliente => resp.marko(
                     require('../views/perfil/cliente/perfil_cliente.marko'), {
                         cliente: cliente[0],
+                        usuarioSessao: usuarioSessao
                     },
                     console.log("listar cliente: " + cliente)
                 ))
@@ -53,8 +54,25 @@ class UsuarioClienteController {
         }
     }
 
-    alterarProfissional() {
+    editarCliente() {
+        return function(req, resp) {
+            const usuariosCliente = new UsuariosCliente(conexao);
+            const usuarioSessao = req.session.passport == undefined ? undefined : req.session.passport.user;
+            console.log("listar cliente: " + req.session.passport.user.idUsuario);
+            const form = req.body;
+            const id = req.session.passport.user.idUsuario;
 
+            usuariosCliente.editar(form);
+
+            usuariosCliente.procurarId(id)
+                .then(cliente => resp.marko(
+                    require('../views/perfil/cliente/perfil_cliente.marko'), {
+                        cliente: cliente[0],
+                        usuarioSessao: usuarioSessao
+                    },
+                ))
+                .catch(erro => console.log(erro));
+        }
     }
 }
 

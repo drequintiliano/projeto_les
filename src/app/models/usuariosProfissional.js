@@ -43,6 +43,40 @@ class UsuariosProfissional {
         })
     }
 
+    editar(profissional) {
+        return new Promise((resolve, reject) => {
+            const sql = `UPDATE usuarios_profissional SET                   
+                    nome = ?,
+                    descricao = ?,
+                    endereco = ?,
+                    cidade = ?,
+                    telefone = ?,
+                    celular = ?,
+                    redes_sociais = ?
+                    WHERE id = ?`;
+
+            const array = [
+                profissional.nome,
+                profissional.descricao,
+                profissional.endereco,
+                profissional.cidade,
+                profissional.telefone,
+                profissional.celular,
+                profissional.redes_sociais,
+                profissional.idProfissional
+            ];
+
+            conexao.query(sql, array, (erro, resultados) => {
+                if (erro) {
+                    console.log(erro);
+                    return reject('Não foi possivel editar usuarios_profissional' + erro);
+                } else {
+                    return resolve();
+                }
+            })
+        })
+    }
+
     procurarEmail(email) {
         return new Promise((resolve, reject) => {
             conexao.query(
