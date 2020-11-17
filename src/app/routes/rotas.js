@@ -38,6 +38,10 @@ const loginController = new LoginController;
 const servicosController = new ServicosController;
 const solicitacoesController = new SolicitacoesController;
 
+function usuarioSessao() {
+    const usuarioSessao = req.session.passport == undefined ? undefined : req.session.passport.user;
+    return usuarioSessao;
+}
 
 /*------------------------------------------------------------ Rotas Home ------------------------------------------------------------*/
 routes.get('/', getIndex);
@@ -109,12 +113,18 @@ routes.get('/perfil_profissional_servicos', servicosController.listarServicosPro
 
 routes.post('/perfil_profissional_servicos', upload.single('img'), servicosController.adicionarServicoProfissional());
 
+routes.post('/editar_servico', upload.single('img'), servicosController.editarServicoProfissional());
+
+routes.delete('/excluir_servico', servicosController.removerServicoProfissional());
+
 // Solicitacoes Profissional
 routes.get('/solicitacoes_profissional', solicitacoesController.listarSolicitacoesProfissional());
 
 routes.delete('/solicitacoes_profissional/:id', solicitacoesProfissionalController.removeSolicitacao());
 
 routes.post('/confirmar_solicitacao', solicitacoesController.confirmarSolicitacao());
+
+routes.post('/cancelar_solicitacao', solicitacoesController.cancelarSolicitacaoProfissional());
 
 
 /*------------------------------------------------------------ Rotas Cliente ------------------------------------------------------------*/

@@ -145,6 +145,34 @@ class Servicos {
         })
     }
 
+    editarServico(servico) {
+        return new Promise((resolve, reject) => {
+            const sql = `UPDATE servicos SET                   
+                    titulo = ?,
+                    caminho_img = ?,
+                    id_categoria = ?,
+                    descricao = ?
+                    WHERE id = ?`;
+
+            const array = [
+                servico.titulo,
+                servico.caminho_img,
+                servico.categoria,
+                servico.descricao,
+                servico.idServico
+            ];
+
+            conexao.query(sql, array, (erro, resultados) => {
+                if (erro) {
+                    console.log(erro);
+                    return reject('Não foi possivel editar servico' + erro);
+                } else {
+                    return resolve();
+                }
+            })
+        })
+    }
+
     cadastrarServicosAvaliacoes(servico) {
         return new Promise((resolve, reject) => {
             const sql = `INSERT INTO servicos_avaliacoes (                   
@@ -190,6 +218,23 @@ class Servicos {
                     return reject('Não foi possivel avaliar servico' + erro);
                 } else {
                     console.log("atualizou qtde avaliacaoes: " + resultados)
+                    return resolve();
+                }
+            })
+        })
+    }
+
+    removerServico(id) {
+        return new Promise((resolve, reject) => {
+            const sql = `DELETE 
+                        FROM servicos                        
+                        WHERE id = ?`
+
+            conexao.query(sql, id, (erro, resultados) => {
+                if (erro) {
+                    console.log(erro);
+                    return reject('Não foi possivel exluir servico' + erro);
+                } else {
                     return resolve();
                 }
             })

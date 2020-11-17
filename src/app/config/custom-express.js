@@ -9,7 +9,6 @@ const methodOverride = require('method-override');
 app.use(express.static(__dirname + '../../../app/public/'));
 
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(bodyParser.json());
 
 app.use(methodOverride(function(req, res) {
     if (req.body && typeof req.body === 'object' && '_method' in req.body) {

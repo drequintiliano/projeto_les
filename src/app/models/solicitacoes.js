@@ -149,9 +149,8 @@ class Solicitacoes {
             conexao.query(sql, id, (erro, resultados) => {
                 if (erro) {
                     console.log(erro);
-                    return reject('Não foi possivel avaliar servico' + erro);
+                    return reject('Não foi possivel cancelar solicitacao' + erro);
                 } else {
-                    console.log("cancelar solicitacao: " + JSON.stringify(resultados));
                     return resolve();
                 }
             })

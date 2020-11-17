@@ -26,8 +26,16 @@ function render(input, out, __component, component, state) {
 
   if (data.usuarioSessao == undefined) {
     out.w("<button type=button class=\"btn btn-light\"><a href=cadastro.html>Cadastrar</a></button>");
-  } else {
+  }
+
+  out.w(" ");
+
+  if (data.usuarioSessao.tipo == 1) {
     out.w("<button type=button class=\"btn btn-light\"><a href=perfil_profissional>Perfil</a></button>");
+  }
+
+  if (data.usuarioSessao.tipo == 2) {
+    out.w("<button type=button class=\"btn btn-light\"><a href=perfil_cliente>Perfil</a></button> ");
   }
 
   out.w("</div></nav><section class=\"page-section portfolio\" id=portfolio><div class=container><br><br><br><h2 class=\"page-section-heading text-center mb-0\">Serviços Domésticos</h2><br><br><br>");
@@ -112,7 +120,7 @@ function render(input, out, __component, component, state) {
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "155");
+  await_reorderer_tag({}, out, __component, "157");
 
   _preferred_script_location_tag({}, out);
 

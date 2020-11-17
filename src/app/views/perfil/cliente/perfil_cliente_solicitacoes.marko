@@ -78,7 +78,7 @@
                     <div class="row py-2">
                         <div class="col-12 col-sm-10 mx-auto py-2">
                             <div class="table-responsive-sm">
-                                <if(data.solicitacoes)>
+                                <if(data.solicitacoes.length > 0)>
                                     <table id="solicitacoes" class="table table-hover">
                                         <thead>
                                             <tr>
@@ -219,9 +219,7 @@
                                             </div>
                                             <div class="col-sm-8">
                                                 <h2>Não existem solicitações.</h2>
-                                            </div>
-                                            <!-- <div class="col-sm">
-                                            </div> -->
+                                            </div>                                            
                                         </div>
                                     </div>
                                 </else>    

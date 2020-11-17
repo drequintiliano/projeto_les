@@ -56,12 +56,16 @@
                 <a  href="cadastro.html">Cadastrar</a>
                 </button>
             </if>                
-            <else>
+            <if(data.usuarioSessao.tipo == 1)>
                 <button type="button" class="btn btn-light">
                     <a  href="perfil_profissional">Perfil</a>
                 </button>
-            </else>
-
+            </if>
+            <if(data.usuarioSessao.tipo == 2)>
+                <button type="button" class="btn btn-light">
+                    <a  href="perfil_cliente">Perfil</a>
+                </button>  
+            </if>
         </div>
     </nav>
 

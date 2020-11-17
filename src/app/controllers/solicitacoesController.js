@@ -260,6 +260,47 @@ class SolicitacoesController {
                 .catch(erro => console.log(erro));
         }
     }
+
+    cancelarSolicitacaoProfissional() {
+        return function(req, res) {
+            const idServico = req.body.idServico;
+            const usuarioSessao = req.session.passport == undefined ? undefined : req.session.passport.user;
+            const idProfissional = usuarioSessao.idUsuario;
+
+            console.log("idProfissional: " + idProfissional + " idServico: " + idServico);
+
+            const solicitacoesProfissional = new Solicitacoes(conexao);
+            solicitacoesProfissional.cancelarSolicitacao(idServico)
+                .then(
+                    solicitacoesProfissional.listarSolicitacoesProfissional(idProfissional)
+                    .then(solicitacoes => res.marko(
+                        require('../views/perfil/profissional/perfil_profissional_solicitacoes.marko'), {
+                            solicitacoes: solicitacoes.map((item) => {
+                                let dataFormatada = moment(item.data_solicitacao, 'DD/MM/YYYY').format('DD/MM/YYYY');
+
+                                return {
+                                    id: item.id,
+                                    id_servico: item.id_servico,
+                                    data_solicitacao: item.data_solicitacao = dataFormatada,
+                                    hora_solicitacao: item.hora_solicitacao,
+                                    nome: item.nome,
+                                    categoria: item.categoria,
+                                    celular: item.celular,
+                                    email: item.email,
+                                    id_status: item.id_status,
+                                    status: item.status,
+                                    titulo: item.titulo,
+                                    endereco: item.endereco
+                                }
+                            }),
+                            usuarioSessao: usuarioSessao
+                        },
+                        console.log("solicitacoes: " + JSON.stringify(solicitacoes))
+                    ))
+                    .catch(erro => console.log(erro))
+                ).catch(erro => console.log(erro));
+        }
+    }
 }
 
 module.exports = SolicitacoesController;

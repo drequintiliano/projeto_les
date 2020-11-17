@@ -37,11 +37,12 @@ module.exports = (app) => {
         const usuarioSessao = {
             idUsuario: user[0].id,
             nome: user[0].nome,
-            email: user[0].email
+            email: user[0].email,
+            tipo: user[0].tipo
         };
 
         console.log("usuario sessao: " + JSON.stringify(user));
-        console.log("usuario sessao id: " + usuarioSessao.idUsuario + " email: " + usuarioSessao.email)
+        console.log("usuario sessao id: " + usuarioSessao.idUsuario + " email: " + usuarioSessao.email + " tipo: " + usuarioSessao.tipo)
         done(null, usuarioSessao);
     });
 

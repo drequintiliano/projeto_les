@@ -74,7 +74,7 @@ class ServicosController {
             const servicos = new Servicos(conexao);
             servicos.listarCategoriaServico(2)
                 .then(servicos => res.marko(
-                    require('../views/categorias/cat_assitencias.marko'), {
+                    require('../views/categorias/cat_assistencias.marko'), {
                         servicos: servicos,
                     }
                 ))
@@ -168,6 +168,53 @@ class ServicosController {
 
             const servicos = new Servicos(conexao);
             servicos.cadastrarServicos(form)
+                .then(
+                    servicos.listarServicoDoProfissional(id)
+                    .then(servicos => res.marko(
+                        require('../views/perfil/profissional/perfil_profissional_servicos.marko'), {
+                            servicos: servicos,
+                            usuarioSessao
+                        }
+                    ))
+                    .catch(erro => console.log(erro))
+                ).catch(erro => console.log(erro));
+        }
+    }
+
+    editarServicoProfissional() {
+        return function(req, res) {
+            const form = req.body;
+            const usuarioSessao = req.session.passport == undefined ? undefined : req.session.passport.user;
+            const id = usuarioSessao.idUsuario;
+
+            console.log("id profissional sessao: " + id + " id serviço alterar: " + JSON.stringify(req.body.idServico));
+            console.log("inserir servico dados form: " + JSON.stringify(form));
+
+            const servicos = new Servicos(conexao);
+            servicos.editarServico(form)
+                .then(
+                    servicos.listarServicoDoProfissional(id)
+                    .then(servicos => res.marko(
+                        require('../views/perfil/profissional/perfil_profissional_servicos.marko'), {
+                            servicos: servicos,
+                            usuarioSessao
+                        }
+                    ))
+                    .catch(erro => console.log(erro))
+                ).catch(erro => console.log(erro));
+        }
+    }
+
+    removerServicoProfissional() {
+        return function(req, res) {
+            const usuarioSessao = req.session.passport == undefined ? undefined : req.session.passport.user;
+            const id = usuarioSessao.idUsuario;
+            const idServico = req.body.idServico;
+
+            console.log("id profissional sessao: " + id + " id serviço excluir: " + JSON.stringify(req.body.idServico));
+
+            const servicos = new Servicos(conexao);
+            servicos.removerServico(idServico)
                 .then(
                     servicos.listarServicoDoProfissional(id)
                     .then(servicos => res.marko(
