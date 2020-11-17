@@ -9,7 +9,9 @@ conexao.connect(erro => {
         console.log('Conectado com sucesso no BD');
 
         Tabelas.init(conexao);
-        app.listen(3000, function() {
+
+        var port = process.env.PORT || 3000;
+        app.listen(port, function() {
             console.log(`Servidor executando na porta 3000`)
         });
     }
