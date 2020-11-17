@@ -6,7 +6,7 @@ conexao.connect(erro => {
     if (erro) {
         console.log('erro ao conectar com BD ' + erro);
     } else {
-        console.log('Conectado no BD com sucesso');
+        console.log('Conectado no Banco de Dados com sucesso');
 
         Tabelas.init(conexao);
 
